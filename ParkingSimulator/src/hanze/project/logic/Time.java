@@ -53,8 +53,8 @@ public class Time extends AbstractModel{
      * Method to reset the time
      */
     public void reset(){
-        this.startCalendar = Calendar.getInstance();;
-        this.runningCalendar = Calendar.getInstance();;
+        this.startCalendar = Calendar.getInstance();
+        this.runningCalendar = Calendar.getInstance();
         this.startTime = this.getStringFromCalendar(this.startCalendar);
         super.notifyViews();
     }
@@ -130,9 +130,10 @@ public class Time extends AbstractModel{
      *
      * @return boolean if its weekend.
      */
-    public boolean isWeekend(){
+    /*public boolean isWeekend(){
         return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SATURDAY || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SUNDAY;
     }
+    */
 
     /**
      * Method for resetting the time.
@@ -141,6 +142,14 @@ public class Time extends AbstractModel{
         this.startCalendar = Calendar.getInstance();
         this.runningCalendar = Calendar.getInstance();
         this.startTime = this.getStringFromCalendar(this.startCalendar);
+    }
+
+    public boolean isVoorstelling(){
+        return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.FRIDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 20 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 23 || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SATURDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 20 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 23 || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SUNDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 13 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 16;
+    }
+
+    public boolean isKoopAvond(){
+        return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.THURSDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 17 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 21;
     }
 
 }
