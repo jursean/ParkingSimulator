@@ -383,6 +383,10 @@ public class Model extends AbstractModel {
         return entranceCarQueue;
     }
 
+    public CarQueue getEntrancePassResvQueue(){
+        return entrancePassResvQueue;
+    }
+
     public CarQueue getExitCarQueue(){
         return exitCarQueue;
     }
