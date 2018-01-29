@@ -21,8 +21,7 @@ public class Model extends AbstractModel {
     private static final String RESV = "3";
 
 	private CarQueue entranceCarQueue;
-    private CarQueue entrancePassQueue;
-    private CarQueue entranceResvQueue;
+    private CarQueue entrancePassResvQueue;
 
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
@@ -68,8 +67,7 @@ public class Model extends AbstractModel {
         this.time = time;
 
         entranceCarQueue = new CarQueue();
-        entrancePassQueue = new CarQueue();
-        entranceResvQueue = new CarQueue();
+        entrancePassResvQueue = new CarQueue();
 
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
@@ -119,9 +117,8 @@ public class Model extends AbstractModel {
 
     private void handleEntrance(){
     	carsArriving();
-    	carsEntering(entrancePassQueue);
     	carsEntering(entranceCarQueue);
-        carsEntering(entranceResvQueue);
+        carsEntering(entrancePassResvQueue);
     }
     
     private void handleExit(){
@@ -225,13 +222,13 @@ public class Model extends AbstractModel {
             break;
     	case PASS:
             for (int i = 0; i < numberOfCars; i++) {
-            	entrancePassQueue.addCar(new ParkingPassCar());
+            	entrancePassResvQueue.addCar(new ParkingPassCar());
             	passHolder++;
             }
             break;
             case RESV:
                 for (int i = 0; i < numberOfCars; i++){
-                    entranceResvQueue.addCar(new ReservationCar());
+                    entrancePassResvQueue.addCar(new ReservationCar());
                     reservationHolder++;
                 }
 
@@ -379,6 +376,10 @@ public class Model extends AbstractModel {
 
     public CarQueue getEntranceCarQueue() {
         return entranceCarQueue;
+    }
+
+    public CarQueue getEntrancePassResvQueue(){
+        return entrancePassResvQueue;
     }
 
     public CarQueue getExitCarQueue(){
