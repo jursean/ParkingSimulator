@@ -44,7 +44,7 @@ public class Controller extends AbstractController implements ActionListener {
         startSimulator.addActionListener(this);
         pauseSimulator = new JButton("Pause");
         pauseSimulator.addActionListener(this);
-        setSpeed = new JSlider(JSlider.VERTICAL, 0,100,100);
+        setSpeed = new JSlider(JSlider.VERTICAL, 0,100,1);
 
         //setSpeed.setOpaque(true);
         setSpeed.setMajorTickSpacing(10);
@@ -77,7 +77,7 @@ public class Controller extends AbstractController implements ActionListener {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
-                ParkingSimulator.simulationSpeed = source.getValue() * 10;
+                ParkingSimulator.simulationSpeed = 1000 - (source.getValue() * 10);
             }
         });
     }
