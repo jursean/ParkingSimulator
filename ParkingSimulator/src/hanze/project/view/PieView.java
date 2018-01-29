@@ -1,7 +1,6 @@
 package hanze.project.view;
 
 import hanze.project.logic.AbstractModel;
-import hanze.project.logic.Model;
 
 import java.awt.*;
 
@@ -23,14 +22,6 @@ public class PieView extends AbstractView {
 		g.setColor(Color.BLUE);
 		
 		g.fillArc(10, 10, 180, 180, 0, aantal);
-
-	}
-
-	public void updateView(){
-		Model simulator = (Model) this.model;
-
-		setVisible(true);
-		//super.updateView;
 
 	}
 }
