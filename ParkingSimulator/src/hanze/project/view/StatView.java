@@ -31,13 +31,13 @@ public class StatView extends AbstractView {
         this.aantalRijUit = new JLabel("Aantal auto's in de rij (uitgang): ");
         this.test = new JLabel();
 
-        statsLabel.setBounds(90, 0, 100, 30); // Default = x: 3 y: 0 width: 100 height: 30
-        aantalTotaalVrij.setBounds(5, 20, 200, 30);
-        aantalNietResvVrij.setBounds(5, 40, 300, 30);
-        aantalResvVrij.setBounds(5, 60, 300, 30);
-        aantalRijIn.setBounds(5, 80, 500, 30);
-        aantalRijUit.setBounds(5, 100, 250, 30);
-        test.setBounds(5, 120, 250, 30);
+        statsLabel.setBounds(5, 0, 100, 30); // Default = x: 3 y: 0 width: 100 height: 30
+        aantalTotaalVrij.setBounds(5, 40, 200, 30);
+        aantalNietResvVrij.setBounds(5, 60, 300, 30);
+        aantalResvVrij.setBounds(5, 80, 300, 30);
+        aantalRijIn.setBounds(5, 100, 500, 30);
+        aantalRijUit.setBounds(5, 120, 250, 30);
+        //test.setBounds(5, 120, 250, 30);
 
         add(statsLabel);
         add(aantalTotaalVrij);

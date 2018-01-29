@@ -25,13 +25,13 @@ public class AbstractView extends JPanel {
 
     // METHODS
 
-    public void setModel(AbstractModel model) {
-        this.model=model;
-    }
-
-    public AbstractModel getModel() {
-        return model;
-    }
+//    public void setModel(AbstractModel model) {
+//        this.model=model;
+//    }
+//
+//    public AbstractModel getModel() {
+//        return model;
+//    }
 
     public void updateView() {
         repaint();

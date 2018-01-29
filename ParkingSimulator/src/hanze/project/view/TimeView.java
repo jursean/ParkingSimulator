@@ -39,12 +39,12 @@ public class TimeView extends AbstractView{
         this.startTimeString = new JLabel();
 
         //Zetten van de bounds
-        dateLabel.setBounds(150,0,100,30); // Default = x: 3 y: -1 width: 100 height: 30
-        minutes.setBounds(5,20,100,30);
-        hours.setBounds(5,40,100,30);
-        days.setBounds(5,60,100,30);
-        simulationTime.setBounds(5,80,100,30);
-        startTimeString.setBounds(5,100,100,30);
+        dateLabel.setBounds(5,0,100,30); // Default = x: 3 y: -1 width: 100 height: 30
+        minutes.setBounds(5,40,100,30);
+        hours.setBounds(5,60,100,30);
+        days.setBounds(5,80,100,30);
+        simulationTime.setBounds(5,100,100,30);
+        startTimeString.setBounds(5,120,100,30);
 
         //Label toevoegen
         add(dateLabel);

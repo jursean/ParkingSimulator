@@ -25,7 +25,6 @@ public class ParkingSimulator {
     private AbstractView carParkView;
     private AbstractView statView;
     private AbstractView timeView;
-    private AbstractView countView;
     private AbstractView pieView;
     private AbstractController controller;
 
@@ -43,8 +42,6 @@ public class ParkingSimulator {
         time = new Time();
         simulator = new Model(3, 6, 30, time);
         model = new AbstractModel();
-        countView = new CountView(model);
-        pieView = new PieView(model);
 
         // PAS HIER DE RESOLUTIE AAN VAN DE GUI
         this.width = 1200;
@@ -55,14 +52,12 @@ public class ParkingSimulator {
         this.carParkView = new CarParkView(simulator);
         this.timeView = new TimeView(time);
         this.pieView = new PieView(simulator);
-        this.countView = new CountView(simulator);
         this.controller = new Controller(simulator);
 
         // VOED HIER DE VIEWS TOE AAN DE GUI
         screen.getContentPane().add(carParkView);
         screen.getContentPane().add(statView);
         screen.getContentPane().add(timeView);
-        screen.getContentPane().add(countView);
         screen.getContentPane().add(pieView);
         screen.getContentPane().add(controller);
 
@@ -70,8 +65,7 @@ public class ParkingSimulator {
         carParkView.setBounds(340,5,770,360);
         statView.setBounds(5,5,330,360);
         timeView.setBounds(5,370,330,300);
-        countView.setBounds(410, 470, 200, 200);
-        pieView.setBounds(630, 470, 200, 200);
+        pieView.setBounds(810, 370, 300, 300);
         controller.setBounds(0, 0, 1200, 750);
 
         // PAS HIER DE BUITENRAND AAN VAN DE VIEWS IN DE GUI
@@ -79,16 +73,15 @@ public class ParkingSimulator {
         statView.setBorder(BorderFactory.createLineBorder(Color.black));
         timeView.setBorder(BorderFactory.createLineBorder(Color.black));
         pieView.setBorder(BorderFactory.createLineBorder(Color.black));
-        countView.setBorder(BorderFactory.createLineBorder(Color.black));
 
         // GUI INSTELLINGEN
         screen.setSize(width, height);
         screen.setResizable(false);
         screen.setLayout(null);
+        screen.setVisible(true);
 
         // AFSLUIT INSTELLINGEN
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        screen.setVisible(true);
 
         while(true){
             if (running) {

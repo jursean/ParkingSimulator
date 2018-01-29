@@ -47,12 +47,12 @@ public class CarParkView extends AbstractView {
      * internal image to SCREEN.
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics graphics) {
         if (carParkImage == null) {
             return;
         }
 
-        g.drawImage(carParkImage, 0, 0, null); // Default = x: 0 y: 0
+        graphics.drawImage(carParkImage, 0, 0, null); // Default = x: 0 y: 0
     }
 
     /**

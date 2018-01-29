@@ -1,6 +1,6 @@
 package hanze.project.view;
 
-import hanze.project.logic.AbstractModel;
+import hanze.project.logic.Model;
 
 import java.awt.*;
 
@@ -8,20 +8,28 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class PieView extends AbstractView {
 
-	public PieView(AbstractModel model) {
+	public PieView(Model simulator) {
 
-		super(model);
+		super(simulator);
 
 	}
 
-	public void paintComponent(Graphics g) {
-		int aantal=getModel().getAantal();
+	public void paintComponent(Graphics graphics) {
+		Model simulator = (Model) super.model;
+		int aantal = simulator.getTotalCars();
 
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 200, 200);
-		g.setColor(Color.BLUE);
-		
-		g.fillArc(10, 10, 180, 180, 0, aantal);
+		graphics.setColor(Color.WHITE);
+		graphics.fillRect(0, 0, 300, 300);
+
+		graphics.setColor(Color.BLUE);
+		graphics.fillArc(25, 25, 250, 250, 0, aantal);
+
+	}
+
+	public void updateView(){
+
+		setVisible(true);
+		super.updateView();
 
 	}
 }

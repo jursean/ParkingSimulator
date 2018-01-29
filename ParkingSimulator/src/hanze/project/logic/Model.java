@@ -86,11 +86,6 @@ public class Model extends AbstractModel {
         }
     }
 
-    public void stop() {
-
-    }
-
-
     public void tick() {
         time.tick();
     	advanceTime();
