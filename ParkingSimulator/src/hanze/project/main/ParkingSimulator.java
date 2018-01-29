@@ -24,6 +24,7 @@ public class ParkingSimulator {
     private AbstractModel model;
     private AbstractView carParkView;
     private AbstractView statView;
+	private AbstractView LegendaView;
     private AbstractView timeView;
     private AbstractView countView;
     private AbstractView pieView;
@@ -52,6 +53,7 @@ public class ParkingSimulator {
 
         // HET INITIALISEREN VAN DE VIEWS
         this.statView = new StatView(simulator);
+		this.LegendaView = new LegendaView(simulator);
         this.carParkView = new CarParkView(simulator);
         this.timeView = new TimeView(time);
         this.pieView = new PieView(simulator);
@@ -61,6 +63,7 @@ public class ParkingSimulator {
         // VOED HIER DE VIEWS TOE AAN DE GUI
         screen.getContentPane().add(carParkView);
         screen.getContentPane().add(statView);
+		screen.getContentPane().add(LegendaView);
         screen.getContentPane().add(timeView);
         screen.getContentPane().add(countView);
         screen.getContentPane().add(pieView);
@@ -69,6 +72,7 @@ public class ParkingSimulator {
         // PAS HIER DE MARGES EN AFMETINGEN AAN VAN DE GUI
         carParkView.setBounds(340,5,770,360);
         statView.setBounds(5,5,330,360);
+		LegendaView.setBounds(850,470,300,200);
         timeView.setBounds(5,370,330,300);
         countView.setBounds(410, 470, 200, 200);
         pieView.setBounds(630, 470, 200, 200);
@@ -77,6 +81,7 @@ public class ParkingSimulator {
         // PAS HIER DE BUITENRAND AAN VAN DE VIEWS IN DE GUI
         carParkView.setBorder(BorderFactory.createLineBorder(Color.black));
         statView.setBorder(BorderFactory.createLineBorder(Color.black));
+		LegendaView.setBorder(BorderFactory.createLineBorder(Color.black));
         timeView.setBorder(BorderFactory.createLineBorder(Color.black));
         pieView.setBorder(BorderFactory.createLineBorder(Color.black));
         countView.setBorder(BorderFactory.createLineBorder(Color.black));
