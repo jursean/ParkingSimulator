@@ -15,6 +15,7 @@ public class StatView extends AbstractView {
     private JLabel aantalNietResvVrij;
     private JLabel aantalResvVrij;
     private JLabel aantalRijIn;
+    private JLabel aantalRijInPassResv;
     private JLabel aantalRijUit;
     private JLabel test;
 
@@ -27,7 +28,10 @@ public class StatView extends AbstractView {
         this.aantalTotaalVrij = new JLabel("Totaal aantal plekken vrij: ");
         this.aantalNietResvVrij = new JLabel("Totaal aantal niet-gereserveerde plekken vrij: ");
         this.aantalResvVrij = new JLabel("Totaal aantal gereserveerde plekken vrij: ");
-        this.aantalRijIn = new JLabel("Aantal auto's in de rij (ingang): ");
+
+        this.aantalRijIn = new JLabel("Aantal auto's in de rij (normaal-ingang): ");
+        this.aantalRijInPassResv = new JLabel("Aantal auto's in de rij (pass/resv-ingang): ");
+
         this.aantalRijUit = new JLabel("Aantal auto's in de rij (uitgang): ");
         this.test = new JLabel();
 
@@ -36,16 +40,18 @@ public class StatView extends AbstractView {
         aantalNietResvVrij.setBounds(5, 40, 300, 30);
         aantalResvVrij.setBounds(5, 60, 300, 30);
         aantalRijIn.setBounds(5, 80, 500, 30);
-        aantalRijUit.setBounds(5, 100, 250, 30);
-        test.setBounds(5, 120, 250, 30);
+        aantalRijInPassResv.setBounds(5, 100, 500, 30);
+        aantalRijUit.setBounds(5, 120, 250, 30);
+        test.setBounds(5, 140, 250, 30);
 
         add(statsLabel);
         add(aantalTotaalVrij);
         add(aantalNietResvVrij);
         add(aantalResvVrij);
         add(aantalRijIn);
+        add(aantalRijInPassResv);
         add(aantalRijUit);
-        add(test);
+        //add(test);
     }
 
         public void updateView(){
@@ -55,7 +61,8 @@ public class StatView extends AbstractView {
             aantalTotaalVrij.setText(("Totaal aantal plekken vrij: ")+ simulator.getTotalNumberOfOpenSpots());
             aantalNietResvVrij.setText(("Totaal aantal niet-gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenSpots());
             aantalResvVrij.setText(("Totaal aantal gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenResvSpots());
-            aantalRijIn.setText(("Aantal auto's in de rij (ingang): ")+ simulator.getEntranceCarQueue().carsInQueue());
+            aantalRijIn.setText(("Aantal auto's in de rij (normaal-ingang): ")+ simulator.getEntranceCarQueue().carsInQueue());
+            aantalRijInPassResv.setText(("Aantal auto's in de rij (pass/resv-ingang): ")+ simulator.getEntrancePassResvQueue().carsInQueue());
             aantalRijUit.setText(("Aantal auto's in de rij (uitgang): ")+ simulator.getExitCarQueue().carsInQueue());
             test.setText(("")+simulator.getNumberOfOpenResvSpots());
 
