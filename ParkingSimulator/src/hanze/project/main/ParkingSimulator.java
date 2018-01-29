@@ -67,9 +67,9 @@ public class ParkingSimulator {
         screen.getContentPane().add(controller);
 
         // PAS HIER DE MARGES EN AFMETINGEN AAN VAN DE GUI
-        carParkView.setBounds(410,5,770,360);
-        statView.setBounds(5,5,400,360);
-        timeView.setBounds(5,370,400,300);
+        carParkView.setBounds(340,5,770,360);
+        statView.setBounds(5,5,330,360);
+        timeView.setBounds(5,370,330,300);
         countView.setBounds(410, 470, 200, 200);
         pieView.setBounds(630, 470, 200, 200);
         controller.setBounds(0, 0, 1200, 750);

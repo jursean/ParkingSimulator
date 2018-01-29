@@ -44,14 +44,14 @@ public class Controller extends AbstractController implements ActionListener {
         startSimulator.addActionListener(this);
         pauseSimulator = new JButton("Pause");
         pauseSimulator.addActionListener(this);
+        setSpeed = new JSlider(JSlider.VERTICAL, 0,100,100);
 
-        setSpeed = new JSlider(JSlider.HORIZONTAL, 0,100,100);
-        setSpeed.setOpaque(true);
+        //setSpeed.setOpaque(true);
         setSpeed.setMajorTickSpacing(10);
         setSpeed.setMinorTickSpacing(2);
         setSpeed.setPaintLabels(true);
         setSpeed.setPaintTicks(true);
-        setSpeed.setInverted(true);
+        //setSpeed.setInverted(true);
 
         add(plusEenStep);
         add(startSimulator);
@@ -63,13 +63,13 @@ public class Controller extends AbstractController implements ActionListener {
         add(setSpeed);
 
         plusEenStep.setBounds(570, 370, 100, 30);
-        startSimulator.setBounds(410, 370, 70, 30);
-        pauseSimulator.setBounds(490, 370, 70, 30);
+        startSimulator.setBounds(340, 370, 70, 30);
+        pauseSimulator.setBounds(420, 370, 70, 30);
         minEen.setBounds(410, 678, 70, 30);
         plusEen.setBounds(490, 678, 70, 30);
         startCounter.setBounds(610, 678, 70, 30);
         stopCounter.setBounds(690, 678, 70, 30);
-        setSpeed.setBounds(680,370,400,100);
+        setSpeed.setBounds(1110,5,70,360);
 
         this.setLayout(null);
 

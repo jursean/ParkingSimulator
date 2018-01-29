@@ -7,7 +7,7 @@ public class ReservationCar extends Car {
 
         // FIELDS
 
-        private static final Color COLOR= Color.yellow;
+        private static final Color COLOR= Color.DARK_GRAY;
 
         // CONSTRUCTORS
 
