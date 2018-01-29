@@ -28,22 +28,25 @@ public class Model extends AbstractModel {
 
     private Time time;
 
-    private int day = 0;
-    private int hour = 0;
-    private int minute = 0;
     private int tickPause = 100;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
-    int weekendArrivals = 200; // average number of arriving cars per hour
+    // Gemiddeld aantal auto's per uur
+    int weekDayArrivals= 100;
+    int weekendArrivals = 200;
+    int voorstellingArrivals = 250;
+    int koopAvondArrivals = 220;
 
-    int weekDayPassArrivals= 50; // average number of arriving cars per hour
-    int weekendPassArrivals = 5; // average number of arriving cars per hour
+    int weekDayPassArrivals= 50;
+    int weekendPassArrivals = 60;
+    int voorstellingPassArrivals = 110;
+    int koopAvondPassArrivals = 50;
 
-    int weekDayResvArrivals = 30; // average number of arriving cars per hour
-    int weekendResvArrivals = 20; // average number of arriving cars per hour
+    int weekDayResvArrivals = 30;
+    int weekendResvArrivals = 60;
+    int voorstellingResvArrivals = 150;
+    int koopAvondResvArrivals = 50;
 
-
-    int enterSpeed = 3; // number of cars that can enter per minute
+    int enterSpeed = 2; // number of cars that can enter per minute
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
@@ -84,9 +87,13 @@ public class Model extends AbstractModel {
         }
     }
 
+    public void stop() {
+
+    }
+
     public void tick() {
         time.tick();
-    	advanceTime();
+    	//advanceTime();
     	handleExit();
     	updateViews();
     	// Pause.
@@ -96,23 +103,6 @@ public class Model extends AbstractModel {
             e.printStackTrace();
         }
     	handleEntrance();
-    }
-
-    private void advanceTime(){
-        // Advance the time by one minute.
-        minute++;
-        while (minute > 59) {
-            minute -= 60;
-            hour++;
-        }
-        while (hour > 23) {
-            hour -= 24;
-            day++;
-        }
-        while (day > 6) {
-            day -= 7;
-        }
-
     }
 
     private void handleEntrance(){
@@ -134,13 +124,13 @@ public class Model extends AbstractModel {
     }
     
     private void carsArriving(){
-    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
+    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, voorstellingArrivals, koopAvondArrivals);
         addArrivingCars(numberOfCars, AD_HOC);
 
-    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
+    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals, voorstellingPassArrivals, koopAvondPassArrivals);
         addArrivingCars(numberOfCars, PASS);
 
-        numberOfCars=getNumberOfCars(weekDayResvArrivals, weekendResvArrivals);
+        numberOfCars=getNumberOfCars(weekDayResvArrivals, weekendResvArrivals, voorstellingResvArrivals, koopAvondResvArrivals);
         addArrivingCars(numberOfCars, RESV);
     }
 
@@ -197,18 +187,32 @@ public class Model extends AbstractModel {
     	}	
     }
     
-    private int getNumberOfCars(int weekDay, int weekend){
+    private int getNumberOfCars(int weekDay, int weekend, int voorstelling, int koopavond){
+        int averageNumberOfCarsPerHour;
         Random random = new Random();
-
         // Get the average number of cars that arrive per hour.
-        int averageNumberOfCarsPerHour = day < 5
-                ? weekDay
-                : weekend;
+        if (time.isWeekend()){
+            averageNumberOfCarsPerHour = weekend;
+            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
+            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
+            return (int)Math.round(numberOfCarsPerHour / 60);
+        } else if (time.isKoopAvond()){
+            averageNumberOfCarsPerHour = koopavond;
+            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
+            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
+            return (int)Math.round(numberOfCarsPerHour / 60);
+        } else if (time.isVoorstelling()){
+            averageNumberOfCarsPerHour = voorstelling;
+            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
+            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
+            return (int)Math.round(numberOfCarsPerHour / 60);
+        }else{
+            averageNumberOfCarsPerHour = weekDay;
+            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
+            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
+            return (int)Math.round(numberOfCarsPerHour / 60);
+        }
 
-        // Calculate the number of cars that arrive this minute.
-        double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-        double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-        return (int)Math.round(numberOfCarsPerHour / 60);	
     }
     
     private void addArrivingCars(int numberOfCars, String type){
