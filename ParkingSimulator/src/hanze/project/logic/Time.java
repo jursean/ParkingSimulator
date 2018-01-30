@@ -134,6 +134,7 @@ public class Time extends AbstractModel{
         return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SATURDAY || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SUNDAY;
     }
 
+
     /**
      * Method for resetting the time.
      */
@@ -143,14 +144,32 @@ public class Time extends AbstractModel{
         this.startTime = this.getStringFromCalendar(this.startCalendar);
     }
 
+    /**
+     *
+     * @return boolean wanneer er een voorstelling is.
+     */
+
     public boolean isVoorstelling(){
         return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.FRIDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 20 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 23 || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SATURDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 20 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 23 || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SUNDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 13 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 16;
     }
 
+    /**
+     *
+     * @return boolean wanneer het koopavond is.
+     */
     public boolean isKoopAvond(){
-        return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.THURSDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 17 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 21;
+        return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.THURSDAY && (this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 17 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 21);
+    }
+
+    /**
+     * @return boolean wanneer het de volgende dag is.
+     **/
+    public boolean volgendeDag(){
+        return this.runningCalendar.get(Calendar.HOUR_OF_DAY) == 23 && this.runningCalendar.get(Calendar.MINUTE) == 59;
+    }
+
+    public boolean isNacht(){
+        return this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 18 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 6;
     }
 
 }
-
-
