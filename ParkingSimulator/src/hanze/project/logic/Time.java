@@ -130,10 +130,9 @@ public class Time extends AbstractModel{
      *
      * @return boolean if its weekend.
      */
-    /*public boolean isWeekend(){
+    public boolean isWeekend(){
         return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SATURDAY || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SUNDAY;
     }
-    */
 
     /**
      * Method for resetting the time.

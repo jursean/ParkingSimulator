@@ -24,7 +24,7 @@ public class ParkingSimulator {
     private AbstractModel model;
     private AbstractView carParkView;
     private AbstractView statView;
-	private AbstractView legendaView;
+	private AbstractView legendView;
     private AbstractView timeView;
     private AbstractView pieView;
     private AbstractController controller;
@@ -50,7 +50,7 @@ public class ParkingSimulator {
 
         // HET INITIALISEREN VAN DE VIEWS
         this.statView = new StatView(simulator);
-		this.legendaView = new LegendaView(simulator);
+		this.legendView = new LegendView(simulator);
         this.carParkView = new CarParkView(simulator);
         this.timeView = new TimeView(time);
         this.pieView = new PieView(simulator);
@@ -59,23 +59,23 @@ public class ParkingSimulator {
         // VOED HIER DE VIEWS TOE AAN DE GUI
         screen.getContentPane().add(carParkView);
         screen.getContentPane().add(statView);
-		screen.getContentPane().add(legendaView);
+		screen.getContentPane().add(legendView);
         screen.getContentPane().add(timeView);
         screen.getContentPane().add(pieView);
         screen.getContentPane().add(controller);
 
         // PAS HIER DE MARGES EN AFMETINGEN AAN VAN DE GUI
         carParkView.setBounds(340,5,770,360);
-        statView.setBounds(5,5,330,360);
-		legendaView.setBounds(370,470,300,200);
+        statView.setBounds(810, 370, 300, 300);
+        legendView.setBounds(370,470,300,200);
         timeView.setBounds(5,370,330,300);
-        pieView.setBounds(810, 370, 300, 300);
+        pieView.setBounds(5,5,330,360);
         controller.setBounds(0, 0, 1200, 750);
 
         // PAS HIER DE BUITENRAND AAN VAN DE VIEWS IN DE GUI
         carParkView.setBorder(BorderFactory.createLineBorder(Color.black));
         statView.setBorder(BorderFactory.createLineBorder(Color.black));
-		legendaView.setBorder(BorderFactory.createLineBorder(Color.black));
+		legendView.setBorder(BorderFactory.createLineBorder(Color.black));
         timeView.setBorder(BorderFactory.createLineBorder(Color.black));
         pieView.setBorder(BorderFactory.createLineBorder(Color.black));
 

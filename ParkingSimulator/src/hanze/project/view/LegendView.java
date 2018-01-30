@@ -5,7 +5,7 @@ import hanze.project.logic.Model;
 import javax.swing.*;
 import java.awt.*;
 
-public class LegendaView extends AbstractView {
+public class LegendView extends AbstractView {
 
     //Initialiseer de velden voor de beschrijving van de kleuren
     private JLabel legendaKopje;
@@ -16,7 +16,7 @@ public class LegendaView extends AbstractView {
     private JLabel grijs;
 
 
-    public LegendaView(Model simulator) {
+    public LegendView(Model simulator) {
         super(simulator);
         Dimension size = new Dimension(250, 400);
 
