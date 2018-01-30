@@ -31,31 +31,34 @@ public class Model extends AbstractModel {
     private int tickPause = 100;
 
     // Gemiddeld aantal auto's per uur
-    int weekDayArrivals= 100;
-    int weekendArrivals = 200;
-    int voorstellingArrivals = 250;
-    int koopAvondArrivals = 220;
+    private int weekDayArrivals= 100;
+    private int weekendArrivals = 200;
+    private int voorstellingArrivals = 250;
+    private int koopAvondArrivals = 220;
 
-    int weekDayPassArrivals= 50;
-    int weekendPassArrivals = 60;
-    int voorstellingPassArrivals = 110;
-    int koopAvondPassArrivals = 50;
+    private int weekDayPassArrivals= 50;
+    private int weekendPassArrivals = 60;
+    private int voorstellingPassArrivals = 110;
+    private int koopAvondPassArrivals = 50;
 
-    int weekDayResvArrivals = 30;
-    int weekendResvArrivals = 60;
-    int voorstellingResvArrivals = 150;
-    int koopAvondResvArrivals = 50;
+    private int weekDayResvArrivals = 30;
+    private int weekendResvArrivals = 60;
+    private int voorstellingResvArrivals = 150;
+    private int koopAvondResvArrivals = 50;
 
-    int enterSpeed = 2; // number of cars that can enter per minute
-    int paymentSpeed = 7; // number of cars that can pay per minute
-    int exitSpeed = 5; // number of cars that can leave per minute
+    private int enterSpeed = 3; // number of cars that can enter per minute
+    private int paymentSpeed = 7; // number of cars that can pay per minute
+    private int exitSpeed = 5; // number of cars that can leave per minute
 
-    double turnoverTotal;
+    private double turnoverTotal;
 
-    int noPassholder = 0;
-    int passHolder = 0;
-    int reservationHolder = 0;
-    int totalCars;
+    private int noPassholder = 0;
+    private int passHolder = 0;
+    private int reservationHolder = 0;
+
+    private int totalCars;
+
+    private int rijTeLang = 0;
 
     // CONSTRUCTORS
 
@@ -122,6 +125,10 @@ public class Model extends AbstractModel {
         // Update the car park view.
         notifyViews();
     }
+
+    private void maakReservering(){
+
+    }
     
     private void carsArriving(){
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, voorstellingArrivals, koopAvondArrivals);
@@ -135,7 +142,16 @@ public class Model extends AbstractModel {
     }
 
     private void carsEntering(CarQueue queue){
+        Random rand = new Random();
+        int random = rand.nextInt(50);
         int i=0;
+
+        // Verwijderen van auto wanneer de rij te lang is
+        if (entranceCarQueue.carsInQueue() > 5 && entranceCarQueue.carsInQueue() < 8 && random > 25 || entranceCarQueue.carsInQueue() >= 8 && entranceCarQueue.carsInQueue() >= 8 && entranceCarQueue.carsInQueue() <= 10 && random > 14 || entranceCarQueue.carsInQueue() > 10){
+            rijTeLang++;
+            queue.removeCar();
+        }
+
         // Remove car from the front of the queue and assign to a parking space.
     	while (queue.carsInQueue()>0 && (!queue.frontCar().getHasReservation() && getNumberOfOpenSpots()>0) && i<enterSpeed || queue.carsInQueue()>0 && (queue.frontCar().getHasReservation() &&getNumberOfOpenResvSpots()>0) && i<enterSpeed) {
             Car car = queue.removeCar();
@@ -398,8 +414,16 @@ public class Model extends AbstractModel {
         return passHolder;
     }
 
+    public int getReservationHolder(){
+        return reservationHolder;
+    }
+
     public int getTotalCars(){
         return (noPassholder + passHolder + reservationHolder) + totalCars;
+    }
+
+    public int getRijTeLang(){
+        return rijTeLang;
     }
 
 }
