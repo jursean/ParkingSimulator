@@ -28,23 +28,23 @@ public class Model extends AbstractModel {
 
     private Time time;
 
-    private int tickPause = 100;
+    private int tickPause = 10;
 
     // Gemiddeld aantal auto's per uur
     private int weekDayArrivals= 100;
     private int weekendArrivals = 200;
     private int voorstellingArrivals = 250;
-    private int koopAvondArrivals = 220;
+    private int koopAvondArrivals = 180;
 
     private int weekDayPassArrivals= 50;
-    private int weekendPassArrivals = 60;
-    private int voorstellingPassArrivals = 110;
+    private int weekendPassArrivals = 10;
+    private int voorstellingPassArrivals = 40;
     private int koopAvondPassArrivals = 50;
 
     private int weekDayResvArrivals = 30;
     private int weekendResvArrivals = 60;
     private int voorstellingResvArrivals = 150;
-    private int koopAvondResvArrivals = 50;
+    private int koopAvondResvArrivals = 30;
 
     private int enterSpeed = 3; // number of cars that can enter per minute
     private int paymentSpeed = 7; // number of cars that can pay per minute
@@ -59,6 +59,8 @@ public class Model extends AbstractModel {
     private int totalCars;
 
     private int rijTeLang = 0;
+
+    private double inkomen = 0.00;
 
     // CONSTRUCTORS
 
@@ -150,6 +152,7 @@ public class Model extends AbstractModel {
         if (entranceCarQueue.carsInQueue() > 5 && entranceCarQueue.carsInQueue() < 8 && random > 25 || entranceCarQueue.carsInQueue() >= 8 && entranceCarQueue.carsInQueue() >= 8 && entranceCarQueue.carsInQueue() <= 10 && random > 14 || entranceCarQueue.carsInQueue() > 10){
             rijTeLang++;
             queue.removeCar();
+            totalCars--;
         }
 
         // Remove car from the front of the queue and assign to a parking space.
@@ -187,6 +190,7 @@ public class Model extends AbstractModel {
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
+            inkomen = car.getTotaalPrijs() + inkomen;
             // TODO Handle payment.
             carLeavesSpot(car);
             i++;
@@ -207,8 +211,8 @@ public class Model extends AbstractModel {
         int averageNumberOfCarsPerHour;
         Random random = new Random();
         // Get the average number of cars that arrive per hour.
-        if (time.isWeekend()){
-            averageNumberOfCarsPerHour = weekend;
+        if (time.isVoorstelling()){
+            averageNumberOfCarsPerHour = voorstelling;
             double standardDeviation = averageNumberOfCarsPerHour * 0.3;
             double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
             return (int)Math.round(numberOfCarsPerHour / 60);
@@ -217,8 +221,8 @@ public class Model extends AbstractModel {
             double standardDeviation = averageNumberOfCarsPerHour * 0.3;
             double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
             return (int)Math.round(numberOfCarsPerHour / 60);
-        } else if (time.isVoorstelling()){
-            averageNumberOfCarsPerHour = voorstelling;
+        } else if (time.isWeekend()){
+            averageNumberOfCarsPerHour = weekend;
             double standardDeviation = averageNumberOfCarsPerHour * 0.3;
             double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
             return (int)Math.round(numberOfCarsPerHour / 60);
@@ -238,18 +242,21 @@ public class Model extends AbstractModel {
             for (int i = 0; i < numberOfCars; i++) {
             	entranceCarQueue.addCar(new AdHocCar());
             	noPassholder++;
+            	totalCars++;
             }
             break;
     	case PASS:
             for (int i = 0; i < numberOfCars; i++) {
             	entrancePassResvQueue.addCar(new ParkingPassCar());
             	passHolder++;
+            	totalCars++;
             }
             break;
             case RESV:
                 for (int i = 0; i < numberOfCars; i++){
                     entrancePassResvQueue.addCar(new ReservationCar());
                     reservationHolder++;
+                    totalCars++;
                 }
 
     	}
@@ -419,11 +426,14 @@ public class Model extends AbstractModel {
     }
 
     public int getTotalCars(){
-        return (noPassholder + passHolder + reservationHolder) + totalCars;
+        return totalCars;
     }
 
     public int getRijTeLang(){
         return rijTeLang;
     }
 
+    public double getInkomen(){
+        return inkomen;
+    }
 }
