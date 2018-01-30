@@ -20,6 +20,7 @@ public class StatView extends AbstractView {
     private JLabel aantalRijTeLang;
     private JLabel test;
     //private JLabel aantalTotaalVrijLabel;
+    private JLabel inkomsten;
 
     // CONSTRUCTORS
     public StatView(Model simulator) {
@@ -37,6 +38,7 @@ public class StatView extends AbstractView {
         this.aantalRijUit = new JLabel("Aantal auto's in de rij (uitgang): ");
         this.aantalRijTeLang = new JLabel("Aantal auto's doorgereden: ");
         this.test = new JLabel();
+        this.inkomsten = new JLabel("Inkomsten: €0");
 
         //this.aantalTotaalVrijLabel = new JLabel("");
 
@@ -49,6 +51,7 @@ public class StatView extends AbstractView {
         aantalRijUit.setBounds(5, 120, 250, 30);
         test.setBounds(5, 140, 250, 30);
         aantalRijTeLang.setBounds(5, 160, 250, 30);
+        inkomsten.setBounds(5, 180, 250, 30);
         //aantalTotaalVrijLabel.setBounds(300,20,200,30);
 
         add(statsLabel);
@@ -61,6 +64,7 @@ public class StatView extends AbstractView {
         add(aantalRijTeLang);
         //add(aantalTotaalVrijLabel);
         //add(test);
+        add(inkomsten);
     }
 
         public void updateView(){
@@ -77,6 +81,7 @@ public class StatView extends AbstractView {
             aantalRijUit.setText(("Aantal auto's in de rij (uitgang): ")+ simulator.getExitCarQueue().carsInQueue());
             aantalRijTeLang.setText(("Aantal auto's doorgereden: ")+ simulator.getRijTeLang());
             test.setText(("")+simulator.getNumberOfOpenResvSpots());
+            inkomsten.setText(("Inkomsten: €") + Math.round(simulator.getInkomen()));
 
             setVisible(true);
             super.updateView();
