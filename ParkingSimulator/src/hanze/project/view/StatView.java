@@ -17,7 +17,9 @@ public class StatView extends AbstractView {
     private JLabel aantalRijIn;
     private JLabel aantalRijInPassResv;
     private JLabel aantalRijUit;
+    private JLabel aantalRijTeLang;
     private JLabel test;
+    //private JLabel aantalTotaalVrijLabel;
 
     // CONSTRUCTORS
     public StatView(Model simulator) {
@@ -33,15 +35,11 @@ public class StatView extends AbstractView {
         this.aantalRijInPassResv = new JLabel("Aantal auto's in de rij (pass/resv-ingang): ");
 
         this.aantalRijUit = new JLabel("Aantal auto's in de rij (uitgang): ");
+        this.aantalRijTeLang = new JLabel("Aantal auto's doorgereden: ");
         this.test = new JLabel();
 
-        statsLabel.setBounds(5, 0, 100, 30); // Default = x: 3 y: 0 width: 100 height: 30
-        aantalTotaalVrij.setBounds(5, 40, 200, 30);
-        aantalNietResvVrij.setBounds(5, 60, 300, 30);
-        aantalResvVrij.setBounds(5, 80, 300, 30);
-        aantalRijIn.setBounds(5, 100, 500, 30);
-        aantalRijUit.setBounds(5, 120, 250, 30);
-        //test.setBounds(5, 120, 250, 30);
+        //this.aantalTotaalVrijLabel = new JLabel("");
+
         statsLabel.setBounds(90, 0, 100, 30); // Default = x: 3 y: 0 width: 100 height: 30
         aantalTotaalVrij.setBounds(5, 20, 200, 30);
         aantalNietResvVrij.setBounds(5, 40, 300, 30);
@@ -50,6 +48,8 @@ public class StatView extends AbstractView {
         aantalRijInPassResv.setBounds(5, 100, 500, 30);
         aantalRijUit.setBounds(5, 120, 250, 30);
         test.setBounds(5, 140, 250, 30);
+        aantalRijTeLang.setBounds(5, 160, 250, 30);
+        //aantalTotaalVrijLabel.setBounds(300,20,200,30);
 
         add(statsLabel);
         add(aantalTotaalVrij);
@@ -58,6 +58,8 @@ public class StatView extends AbstractView {
         add(aantalRijIn);
         add(aantalRijInPassResv);
         add(aantalRijUit);
+        add(aantalRijTeLang);
+        //add(aantalTotaalVrijLabel);
         //add(test);
     }
 
@@ -65,12 +67,15 @@ public class StatView extends AbstractView {
 
             Model simulator = (Model) super.model;
 
+            //aantalTotaalVrijLabel.setText(("")+simulator.getTotalNumberOfOpenSpots());
+
             aantalTotaalVrij.setText(("Totaal aantal plekken vrij: ")+ simulator.getTotalNumberOfOpenSpots());
             aantalNietResvVrij.setText(("Totaal aantal niet-gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenSpots());
             aantalResvVrij.setText(("Totaal aantal gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenResvSpots());
             aantalRijIn.setText(("Aantal auto's in de rij (normaal-ingang): ")+ simulator.getEntranceCarQueue().carsInQueue());
             aantalRijInPassResv.setText(("Aantal auto's in de rij (pass/resv-ingang): ")+ simulator.getEntrancePassResvQueue().carsInQueue());
             aantalRijUit.setText(("Aantal auto's in de rij (uitgang): ")+ simulator.getExitCarQueue().carsInQueue());
+            aantalRijTeLang.setText(("Aantal auto's doorgereden: ")+ simulator.getRijTeLang());
             test.setText(("")+simulator.getNumberOfOpenResvSpots());
 
             setVisible(true);
