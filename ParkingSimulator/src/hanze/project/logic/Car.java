@@ -13,6 +13,8 @@ public abstract class Car {
     private boolean isPaying;
     private boolean hasToPay;
     private boolean hasReservation;
+    private double totaalPrijs;
+    //private int aantalMinuten;
 
     // CONSTRUCTORS
 
@@ -55,6 +57,14 @@ public abstract class Car {
 
     public void setHasToPay(boolean hasToPay) {
         this.hasToPay = hasToPay;
+    }
+
+    public void setTotaalPrijs(double totaalPrijs) {
+        this.totaalPrijs = totaalPrijs;
+    }
+
+    public double getTotaalPrijs() {
+        return totaalPrijs;
     }
 
     public boolean getHasReservation(){
