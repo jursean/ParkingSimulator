@@ -24,6 +24,11 @@ public class StatView extends AbstractView {
     private JLabel aantalRijIn;
     private JLabel aantalRijInPassResv;
     private JLabel aantalRijUit;
+    
+    private JLabel garageVol;
+    private JLabel garageBijnaVol;
+    private JLabel genoegPlek;
+    
     private JLabel aantalRijTeLang;
     private JLabel test;
     //private JLabel aantalTotaalVrijLabel;
@@ -44,7 +49,9 @@ public class StatView extends AbstractView {
 
         this.aantalRijIn = new JLabel("Aantal auto's in de rij (normaal-ingang): ");
         this.aantalRijInPassResv = new JLabel("Aantal auto's in de rij (pass/resv-ingang): ");
-
+        this.garageVol = new JLabel("De garage is vol!");
+        this.garageBijnaVol = new JLabel("De garage is bijna vol!");
+        this.genoegPlek = new JLabel("Er is genoeg plek");
         this.aantalRijUit = new JLabel("Aantal auto's in de rij (uitgang): ");
         this.aantalRijTeLang = new JLabel("Aantal auto's doorgereden: ");
         this.test = new JLabel();
@@ -61,6 +68,9 @@ public class StatView extends AbstractView {
         aantalRijIn.setBounds(5, 80, 500, 30);
         aantalRijInPassResv.setBounds(5, 100, 500, 30);
         aantalRijUit.setBounds(5, 120, 250, 30);
+        garageVol.setBounds(5,140,500,30);
+        garageBijnaVol.setBounds(5,140,500,30);
+        genoegPlek.setBounds(5,140,500,30);
         test.setBounds(5, 140, 250, 30);
         aantalRijTeLang.setBounds(5, 160, 250, 30);
         Verwachteinkomen.setBounds(5,200,300,30);
@@ -75,6 +85,9 @@ public class StatView extends AbstractView {
         add(aantalRijIn);
         add(aantalRijInPassResv);
         add(aantalRijUit);
+        add(garageVol);
+        add(genoegPlek);
+        add(garageBijnaVol);
         add(aantalRijTeLang);
         //add(aantalTotaalVrijLabel);
         //add(test);
@@ -109,6 +122,30 @@ public class StatView extends AbstractView {
 
             setVisible(true);
             super.updateView();
+            
+            if(simulator.getNumberOfOpenSpots() < 10){
+
+               garageVol.setVisible(true);
+               garageVol.setForeground(Color.red);
+            } else{
+                garageVol.setVisible(false);
+            }
+
+            if(simulator.getNumberOfOpenSpots() > 10 && simulator.getNumberOfOpenSpots() < 50){
+
+                garageBijnaVol.setVisible(true);
+                garageBijnaVol.setForeground(Color.orange);
+            } else{
+                garageBijnaVol.setVisible(false);
+            }
+
+            if(simulator.getNumberOfOpenSpots() > 50){
+
+                genoegPlek.setVisible(true);
+                genoegPlek.setForeground(Color.green);
+            } else{
+                genoegPlek.setVisible(false);
+            }
         }
    }
 
