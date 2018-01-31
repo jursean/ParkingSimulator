@@ -1,21 +1,30 @@
 package hanze.project.controller;
 
-import hanze.project.logic.AbstractModel;
-import javax.swing.*;
+        import hanze.project.logic.AbstractModel;
+        import javax.swing.*;
 
-// CLASS
+/**
+ * Class AbstractController
+ * Alle controllers moeten een instantie hebben van deze klasse.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
 
 public abstract class AbstractController extends JPanel {
 
-    // FIELDS
+    // De velden
 
-    //  A controller should have a certain instance of the AbstractModel
+    // Een controller zou een instantie van de "AbstractModel" moeten hebben.
     protected AbstractModel model;
 
-    // CONSTRUCTORS
+    // De constructors
 
-    //  Constructor of AbstractController with a logic belong to this controller
-    //  @param model AbstractModel that belongs to this controller
+    /**
+     * Constructor of AbstractController with a logic belong to this controller.
+     * @return Het model "AbstractModel" die behoord tot deze controller.
+     */
+
     public AbstractController(AbstractModel model) {
         this.model = model;
     }
