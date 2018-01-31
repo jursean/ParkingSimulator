@@ -191,7 +191,7 @@ public class Time extends AbstractModel{
      */
 
     public boolean isNacht(){
-        return this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 18 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 6;
+        return this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 0 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 6;
     }
 }
 
