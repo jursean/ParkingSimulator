@@ -423,16 +423,6 @@ public class Model extends AbstractModel {
     }
 
     /**
-     * Geeft terug hoeveel vrije plekken de garage totaal heeft.
-     * @return totalNumberOfOpenSpots Het totaal van vrije plekken
-     */
-
-    public int getTotalNumberOfOpenSpots(){
-        int totalNumberOfOpenSpots = (getNumberOfOpenSpots() + getNumberOfOpenResvSpots());
-        return totalNumberOfOpenSpots;
-    }
-
-    /**
      * Checked wat voor auto op een bepaalde plek staat.
      * @param location Locatie van de auto
      * @return cars Geeft de auto terug.
