@@ -4,10 +4,19 @@ import hanze.project.logic.Model;
 
 import java.awt.*;
 
+/**
+ * Class PieView
+ * Zorgt ervoor dat de taart diagram in beeld komt.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
+
 @SuppressWarnings("serial")
 public class PieView extends AbstractView {
 
-	//Establish variables for this program
+	// De velden
+
 	int numberOfScores = 5;
 	int Xleft = 100;
 	int Xright = 300;
@@ -18,7 +27,8 @@ public class PieView extends AbstractView {
 	int[ ] scores;
 	char graphChoice;
 
-	//Constructor to establish the initial values in the program
+	// De constructors
+
 	public PieView (Model simulator)
 	{
 		super(simulator);
@@ -32,14 +42,23 @@ public class PieView extends AbstractView {
 		graphChoice = 'P';
 	}
 
+	// De methodes
+
 	@Override
+
+	/**
+	 * Zorgt ervoor dat de graphics van de diagram geladen worden.
+	 */
+
 	public void paintComponent (Graphics graphics)
 	{
 		getInputData();
 		drawPieGraph(graphics);
 	}
 
-	//Get input from the screen
+	/**
+	 * Haalt de informatie van het scherm.
+	 */
 
 	public void getInputData()
 	{
@@ -52,7 +71,11 @@ public class PieView extends AbstractView {
 		scores[4] = simulator.getReservationHolder();
 	}
 
-	//Draw the pie graph
+
+	/**
+	 * Zorgt ervoor dat de taart diagram getekend word.
+	 */
+
 	public void drawPieGraph(Graphics graphics)
 	{
 
@@ -62,7 +85,6 @@ public class PieView extends AbstractView {
 		int i, totalUnits, centerX, centerY, radius, startAngle;
 		double unitAngleSize;
 
-		//Set up center point and radius of the pie, and the unit angle size
 		totalUnits = sum(scores);
 		centerX = getSize().width / 2;
 		centerY = getSize().height / 2;
@@ -77,7 +99,6 @@ public class PieView extends AbstractView {
 
 		startAngle = 0;
 
-		//Draw the wedges of the pie
 		for(i=0; i < numberOfScores; i++)
 		{
 			int centralAngle = (int)(unitAngleSize * scores[i]);
@@ -89,7 +110,12 @@ public class PieView extends AbstractView {
 		setVisible(true);
 	}
 
-	//Find the sum of the array
+	/**
+	 * vind de som van autos in de garage.
+	 * @param a Haalt de gegevens op
+	 * @return Totaal aantal auto's
+	 */
+
 	public int sum(int [ ] a)
 	{
 		int i;
@@ -99,7 +125,12 @@ public class PieView extends AbstractView {
 		return total;
 	}
 
-	//Set the colors for the pie slices
+	/**
+	 * Stelt de kleur van de taart diagram in.
+	 * @param i De kleur die de diagram gaat krijgen
+	 * @return color De kleur
+	 */
+
 	public Color intToColor (int i)
 	{
 		Color color = Color.black;
@@ -128,6 +159,10 @@ public class PieView extends AbstractView {
 		}
 		return color;
 	}
+
+	/**
+	 * Update de taart diagram.
+	 */
 
 	public void updateView(){
 
