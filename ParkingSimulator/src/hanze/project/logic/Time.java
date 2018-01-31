@@ -178,6 +178,15 @@ public class Time extends AbstractModel{
 
     /**
      *
+     * @return boolean of het avond is.
+     */
+
+    public boolean isAvond(){
+        return this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 18 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) <= 24;
+    }
+
+    /**
+     *
      * @return boolean Of het nacht is of niet
      */
 
