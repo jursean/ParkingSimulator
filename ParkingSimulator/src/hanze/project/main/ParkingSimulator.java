@@ -32,7 +32,7 @@ public class ParkingSimulator {
     private AbstractView statView;
 	private AbstractView legendView;
     private AbstractView timeView;
-    private AbstractView pieView;
+    private AbstractView tabView;
     private AbstractController controller;
 
     public static int simulationSpeed = 1000;
@@ -55,28 +55,27 @@ public class ParkingSimulator {
 		this.legendView = new LegendView(simulator);
         this.carParkView = new CarParkView(simulator);
         this.timeView = new TimeView(time);
-        this.pieView = new PieView(simulator);
+        this.tabView = new TabView(simulator);
         this.controller = new Controller(simulator);
 
         screen.getContentPane().add(carParkView);
         screen.getContentPane().add(statView);
 		screen.getContentPane().add(legendView);
         screen.getContentPane().add(timeView);
-        screen.getContentPane().add(pieView);
+        screen.getContentPane().add(tabView);
         screen.getContentPane().add(controller);
 
         carParkView.setBounds(340,5,770,360);
         statView.setBounds(810, 370, 300, 300);
         legendView.setBounds(370,470,300,200);
         timeView.setBounds(5,370,330,300);
-        pieView.setBounds(5,5,330,360);
+        tabView.setBounds(5,5,330,360);
         controller.setBounds(0, 0, 1200, 750);
 
         carParkView.setBorder(BorderFactory.createLineBorder(Color.black));
         statView.setBorder(BorderFactory.createLineBorder(Color.black));
 		legendView.setBorder(BorderFactory.createLineBorder(Color.black));
         timeView.setBorder(BorderFactory.createLineBorder(Color.black));
-        pieView.setBorder(BorderFactory.createLineBorder(Color.black));
 
         screen.setSize(width, height);
         screen.setResizable(false);
