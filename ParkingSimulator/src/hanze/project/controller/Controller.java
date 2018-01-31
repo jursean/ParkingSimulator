@@ -87,7 +87,7 @@ public class Controller extends AbstractController implements ActionListener {
 
     private void startPressed() {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("parkingsimulator/src/hanze/project/sound/startstop.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/hanze/project/sound/startstop.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
