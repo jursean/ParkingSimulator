@@ -19,6 +19,7 @@ public abstract class Car {
     private boolean isPaying;
     private boolean hasToPay;
     private boolean hasReservation;
+    private double totaalPrijs;
 
     // De constructors
 
@@ -100,7 +101,18 @@ public abstract class Car {
     public void setHasToPay(boolean hasToPay) {
         this.hasToPay = hasToPay;
     }
-
+    /**
+    * Geeft de totale prijs
+    */
+    public void setTotaalPrijs(double totaalPrijs) {
+        this.totaalPrijs = totaalPrijs;
+    }
+/**
+* geeft de totale prijs terug
+*/
+    public double getTotaalPrijs() {
+        return totaalPrijs;
+    }
     /**
      * Geeft terug of de auto heeft gereserveerd.
      * @return boolean Of de auto heeft gereserveerd
