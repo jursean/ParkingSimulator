@@ -5,40 +5,63 @@ import hanze.project.view.AbstractView;
 import java.util.ArrayList;
 import java.util.List;
 
-// CLASS
+/**
+ * Class AbstractModel
+ * Deze klasse maakt de knoppen in de GUI.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
 
 public class AbstractModel implements Runnable{
 
-    // FIELDS
+    // De velden
 
-    // List of views that are linked to the logic
+    // Een lijst van views die gelinkt zijn aan de logic.
+
     private int aantal;
     private List<AbstractView> views;
     private boolean run;
 
-    // CONSTRUCTORS
+    // De constructors
 
-    //  Constructor for AbstractModel that creates a list with views that belong to the logic that is created
+    //  Constructor van AbstractModel
+
     public AbstractModel() {
         this.views = new ArrayList<AbstractView>();
     }
 
-    // METHODS
+    // De methodes
 
-    //  Method to add a view to the logic
-    //  @param view AbstractView that belongs to the logic.
+    /**
+     * Deze methode voegd views toe aan de logic.
+     * @param view De abstactview die behoort tot de logic.
+     */
     public void addView(AbstractView view) {
         this.views.add(view);
     }
 
-    //  Method to notify the views that belong to this logic that an update is required because a change has been done
+    /**
+     * Deze methode word gebruikt om de views te updaten.
+     */
+
     public void notifyViews(){
         for (AbstractView view : this.views) view.updateView();
     }
 
+    /**
+     * Deze methode geeft het aantal auto's terug.
+     * @return aantal Het aantal autos in de garage.
+     */
+
     public int getAantal() {
         return aantal;
     }
+
+    /**
+     * Deze methode veranderd het aantal views.
+     * @param aantal Aantal views
+     */
 
     public void setAantal(int aantal) {
         if (aantal>=0 && aantal <=360) {
@@ -47,15 +70,10 @@ public class AbstractModel implements Runnable{
         }
     }
 
-    public void start() {
-        new Thread(this).start();
-    }
+    /**
+     * Deze methode zorgt ervoor dat de thread draait.
+     */
 
-    public void stop() {
-        run=false;
-    }
-
-    @Override
     public void run() {
         run=true;
         while(run) {
