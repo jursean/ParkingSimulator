@@ -18,6 +18,9 @@ import java.awt.*;
 public class CarParkView extends AbstractView {
     private JLabel titelTotalCar;
     private JLabel totalCar;
+    private JLabel garageVol;
+    private JLabel garageBijnaVol;
+    private JLabel genoegPlek;
     private Image carParkImage;
     private Dimension size;
 
@@ -26,14 +29,25 @@ public class CarParkView extends AbstractView {
     public CarParkView(Model simulator) {
         super(simulator);
         this.titelTotalCar = new JLabel("Totaal aantal auto's in garage: 0");
-        this.totalCar = new JLabel(" ");
+        this.totalCar = new JLabel("");
+        this.garageVol = new JLabel("Standaard plekken vol!");
+        this.garageBijnaVol = new JLabel("Standaard plekken bijna vol!");
+        this.genoegPlek = new JLabel("Genoeg standaard plekken");
+
+
         this.size = new Dimension(920, 400); // Default = width: 680 height: 330
 
         titelTotalCar.setBounds(5,5,300,20); // Default = x: 0 y: 10 width: 200 height: 20
         totalCar.setBounds(150,10,20,20);   // Default = x: 150 y: 10 width: 20 height: 20
+        garageVol.setBounds(300,10,300,20);
+        garageBijnaVol.setBounds(300,10,300,20);
+        genoegPlek.setBounds(300,10,300,20);
 
         add(titelTotalCar);
         add(totalCar);
+        add(garageVol);
+        add(garageBijnaVol);
+        add(genoegPlek);
     }
 
     // De methodes
@@ -65,6 +79,30 @@ public class CarParkView extends AbstractView {
         carParkImage = createImage(size.width, size.height);
 
         Graphics graphics = carParkImage.getGraphics();
+
+        if(simulator.getNumberOfOpenSpots() < 10){
+
+            garageVol.setVisible(true);
+            garageVol.setForeground(Color.red);
+        } else{
+            garageVol.setVisible(false);
+        }
+
+        if(simulator.getNumberOfOpenSpots() > 10 && simulator.getNumberOfOpenSpots() < 50){
+
+            garageBijnaVol.setVisible(true);
+            garageBijnaVol.setForeground(Color.orange);
+        } else{
+            garageBijnaVol.setVisible(false);
+        }
+
+        if(simulator.getNumberOfOpenSpots() > 50){
+
+            genoegPlek.setVisible(true);
+            genoegPlek.setForeground(Color.green);
+        } else{
+            genoegPlek.setVisible(false);
+        }
 
 
         for (int floor = 0; floor < simulator.getNumberOfFloors(); floor++) {
