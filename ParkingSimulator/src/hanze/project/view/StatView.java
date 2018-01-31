@@ -24,17 +24,17 @@ public class StatView extends AbstractView {
     private JLabel aantalRijIn;
     private JLabel aantalRijInPassResv;
     private JLabel aantalRijUit;
-    
     private JLabel garageVol;
     private JLabel garageBijnaVol;
     private JLabel genoegPlek;
-    
     private JLabel aantalRijTeLang;
     private JLabel test;
-    //private JLabel aantalTotaalVrijLabel;
     private JLabel inkomsten;
     private JLabel Verwachteinkomen;
     private JLabel gister;
+    private JLabel aantalNormaal;
+    private JLabel aantalPassHouder;
+    private JLabel aantalResvHouder;
 
     // De constructors
 
@@ -54,10 +54,12 @@ public class StatView extends AbstractView {
         this.genoegPlek = new JLabel("Er is genoeg plek");
         this.aantalRijUit = new JLabel("Aantal auto's in de rij (uitgang): ");
         this.aantalRijTeLang = new JLabel("Aantal auto's doorgereden: ");
-        this.test = new JLabel();
         this.inkomsten = new JLabel("Inkomsten: €0");
         this.Verwachteinkomen = new JLabel("Verwachte inkomsten: €0");
         this.gister= new JLabel("Inkomsten van gister:");
+        this.aantalNormaal = new JLabel("Aantal normale parkeerhouders: ");
+        this.aantalPassHouder = new JLabel("Aantal abonnement parkeerhouders: ");
+        this.aantalResvHouder = new JLabel("Aantal reservering parkeerhouders: ");
 
         //this.aantalTotaalVrijLabel = new JLabel("");
 
@@ -71,12 +73,14 @@ public class StatView extends AbstractView {
         garageVol.setBounds(5,140,500,30);
         garageBijnaVol.setBounds(5,140,500,30);
         genoegPlek.setBounds(5,140,500,30);
-        test.setBounds(5, 140, 250, 30);
         aantalRijTeLang.setBounds(5, 160, 250, 30);
-        Verwachteinkomen.setBounds(5,200,300,30);
-        inkomsten.setBounds(5,220,300,30);
-        gister.setBounds(5,260,300,30);
-        //aantalTotaalVrijLabel.setBounds(300,20,200,30);
+        Verwachteinkomen.setBounds(5,180,300,30);
+        inkomsten.setBounds(5,200,300,30);
+        gister.setBounds(5,220,300,30);
+        aantalNormaal.setBounds(5, 240, 250, 30);
+        aantalPassHouder.setBounds(5, 260, 250, 30);
+        aantalResvHouder.setBounds(5, 280, 250, 30);
+
 
         add(statsLabel);
         add(aantalTotaalVrij);
@@ -89,14 +93,15 @@ public class StatView extends AbstractView {
         add(genoegPlek);
         add(garageBijnaVol);
         add(aantalRijTeLang);
-        //add(aantalTotaalVrijLabel);
-        //add(test);
         add(inkomsten);
         add(Verwachteinkomen);
         add(gister);
+        add(aantalNormaal);
+        add(aantalPassHouder);
+        add(aantalResvHouder);
     }
 
-        // De methodes
+    // De methodes
 
     /**
      * Update de gegevens op het scherm
@@ -104,48 +109,50 @@ public class StatView extends AbstractView {
 
     public void updateView(){
 
-            Model simulator = (Model) super.model;
+        Model simulator = (Model) super.model;
 
-            //aantalTotaalVrijLabel.setText(("")+simulator.getTotalNumberOfOpenSpots());
+        //aantalTotaalVrijLabel.setText(("")+simulator.getTotalNumberOfOpenSpots());
 
-            aantalTotaalVrij.setText(("Totaal aantal plekken vrij: ")+ simulator.getTotalNumberOfOpenSpots());
-            aantalNietResvVrij.setText(("Totaal aantal niet-gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenSpots());
-            aantalResvVrij.setText(("Totaal aantal gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenResvSpots());
-            aantalRijIn.setText(("Aantal auto's in de rij (normaal-ingang): ")+ simulator.getEntranceCarQueue().carsInQueue());
-            aantalRijInPassResv.setText(("Aantal auto's in de rij (pass/resv-ingang): ")+ simulator.getEntrancePassResvQueue().carsInQueue());
-            aantalRijUit.setText(("Aantal auto's in de rij (uitgang): ")+ simulator.getExitCarQueue().carsInQueue());
-            aantalRijTeLang.setText(("Aantal auto's doorgereden: ")+ simulator.getRijTeLang());
-            test.setText(("")+simulator.getNumberOfOpenResvSpots());
-            inkomsten.setText(("Inkomsten: €") + Math.round(simulator.getInkomen()));
-            Verwachteinkomen.setText(("Verwachte inkomsten: €") + Math.round(simulator.getVerwachteinkomen()));
-            gister.setText(("Inkomsten van gister: €") + Math.round(simulator.getInkomen()));
+        aantalTotaalVrij.setText(("Totaal aantal plekken vrij: ")+ simulator.getTotalNumberOfOpenSpots());
+        aantalNietResvVrij.setText(("Totaal aantal niet-gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenSpots());
+        aantalResvVrij.setText(("Totaal aantal gereserveerde plekken vrij: ")+ simulator.getNumberOfOpenResvSpots());
+        aantalRijIn.setText(("Aantal auto's in de rij (normaal-ingang): ")+ simulator.getEntranceCarQueue().carsInQueue());
+        aantalRijInPassResv.setText(("Aantal auto's in de rij (pass/resv-ingang): ")+ simulator.getEntrancePassResvQueue().carsInQueue());
+        aantalRijUit.setText(("Aantal auto's in de rij (uitgang): ")+ simulator.getExitCarQueue().carsInQueue());
+        aantalRijTeLang.setText(("Aantal auto's doorgereden: ")+ simulator.getRijTeLang());
+        inkomsten.setText(("Inkomsten: €") + Math.round(simulator.getInkomen()));
+        Verwachteinkomen.setText(("Verwachte inkomsten: €") + Math.round(simulator.getVerwachteinkomen()));
+        gister.setText(("Inkomsten van gister: €") + Math.round(simulator.getInkomen()));
+        aantalNormaal.setText(("Aantal normale parkeerhouders: ")+simulator.getTotalNoPassholder());
+        aantalPassHouder.setText(("Aantal abonnement parkeerhouders: ")+simulator.getTotalPassHolder());
+        aantalResvHouder.setText(("Aantal reservering parkeerhouders: ")+simulator.getTotalReservationHolder());
 
-            setVisible(true);
-            super.updateView();
-            
-            if(simulator.getNumberOfOpenSpots() < 10){
+        setVisible(true);
+        super.updateView();
 
-               garageVol.setVisible(true);
-               garageVol.setForeground(Color.red);
-            } else{
-                garageVol.setVisible(false);
-            }
+        if(simulator.getNumberOfOpenSpots() < 10){
 
-            if(simulator.getNumberOfOpenSpots() > 10 && simulator.getNumberOfOpenSpots() < 50){
-
-                garageBijnaVol.setVisible(true);
-                garageBijnaVol.setForeground(Color.orange);
-            } else{
-                garageBijnaVol.setVisible(false);
-            }
-
-            if(simulator.getNumberOfOpenSpots() > 50){
-
-                genoegPlek.setVisible(true);
-                genoegPlek.setForeground(Color.green);
-            } else{
-                genoegPlek.setVisible(false);
-            }
+            garageVol.setVisible(true);
+            garageVol.setForeground(Color.red);
+        } else{
+            garageVol.setVisible(false);
         }
-   }
+
+        if(simulator.getNumberOfOpenSpots() > 10 && simulator.getNumberOfOpenSpots() < 50){
+
+            garageBijnaVol.setVisible(true);
+            garageBijnaVol.setForeground(Color.orange);
+        } else{
+            garageBijnaVol.setVisible(false);
+        }
+
+        if(simulator.getNumberOfOpenSpots() > 50){
+
+            genoegPlek.setVisible(true);
+            genoegPlek.setForeground(Color.green);
+        } else{
+            genoegPlek.setVisible(false);
+        }
+    }
+}
 
