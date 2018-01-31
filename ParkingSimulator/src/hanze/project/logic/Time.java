@@ -7,17 +7,23 @@ import java.util.concurrent.TimeUnit;
 import static java.util.Calendar.DAY_OF_WEEK;
 import static java.util.Calendar.MINUTE;
 
-// CLASS
+/**
+ * Class Time
+ * Deze klasse zorgt ervoor dat de tijd goed staat.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
 
 public class Time extends AbstractModel{
 
-    // FIELDS
+    // De velden
 
     private Calendar startCalendar;
     private Calendar runningCalendar;
     private String startTime;
 
-    // CONSTRUCTORS
+    // De constructors
 
     public Time() {
         this.startCalendar = Calendar.getInstance();
@@ -25,23 +31,23 @@ public class Time extends AbstractModel{
         this.startTime = this.getStringFromCalendar(this.startCalendar);
     }
 
-    // METHODS
+    // De methodes
 
     /**
-     * Tick the minute away
+     * Deze klasse zorgt ervoor dat er een minuut tijd verloopt.
      */
+
     public void tick() {
         this.runningCalendar.add(MINUTE,+1);
         super.notifyViews();
     }
 
     /**
-     * This private method wil create a formatted string from a calendar object.
-     * The format will be HH-MMh mm-dd-yyyy.
-     *
-     * @param cal Calendar object to create the string from.
-     * @return String with the time of the calendar formatted.
+     * Deze methode zorgt ervoor dat de tijd in het goede formaat staat.
+     * @param cal Calender object
+     * @return String Calenderdatum en tijd die omgezet is in een String
      */
+
     private String getStringFromCalendar(Calendar cal){
         String timeString = String.format("%02d:%02d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE))+"h";
         String dateString = cal.get(Calendar.DAY_OF_MONTH)+"-"+cal.get(Calendar.MONTH)+"-"+cal.get(Calendar.YEAR);
@@ -50,8 +56,9 @@ public class Time extends AbstractModel{
     }
 
     /**
-     * Method to reset the time
+     * Methode die de tijd reset.
      */
+
     public void reset(){
         this.startCalendar = Calendar.getInstance();
         this.runningCalendar = Calendar.getInstance();
@@ -60,84 +67,83 @@ public class Time extends AbstractModel{
     }
 
     /**
-     * Get the current time of the simulation.
-     *
-     * @return String formatted nicely for the human eye.
+     * Geeft de tijd in de simulatie terug.
+     * @return String met daarin de tijd van de simulatie
      */
+
     public String getCurrentTime(){
         return this.getStringFromCalendar(this.runningCalendar);
     }
 
     /**
-     * Here we get both calendar objects as milliseconds. We can then calculate the
-     * amount of milliseconds that differ between the start and current time.
-     *
-     * @return long with the amount that the calendars differ in milliseconds.
+     * Het verschil tussen de starttijd en de tijd die het nu is in de simulator.
+     * @return long Met de tijd hoelang de simulator al draait
      */
+
     public long runningDifference() {
         return Math.abs(this.runningCalendar.getTimeInMillis() - this.startCalendar.getTimeInMillis());
     }
 
     /**
-     * Here we turn the difference in milliseconds into days.
-     *
-     * @return String that shows the amount of days that passed.
+     * Hierin word de tijd dat de simulator draait omgezet in dagen.
+     * @return String Met daarin de dagen dat de simulator draait
      */
+
     public String getRunningDays(){
         return Objects.toString(TimeUnit.MILLISECONDS.toDays(runningDifference()),null);
     }
 
     /**
-     * Here we turn the difference in milliseconds into hours.
-     *
-     * @return String that shows the amount of hours that passed.
+     * Hierin word de tijd dat de simulator draait omgezet in uren.
+     * @return String Met daarin de uren dat de simulator draait
      */
+
     public String getRunningHours(){
         return Objects.toString(TimeUnit.MILLISECONDS.toHours(runningDifference()),null);
     }
 
     /**
-     * Here we turn the difference in milliseconds into minutes.
-     *
-     * @return String that shows the amount of minutes that passed.
+     * Hierin word de tijd dat de simulator draait omgezet in minuten.
+     * @return String Met daarin de minuten dat de simulator draait
      */
+
     public String getRunningMinutes(){
         return Objects.toString(TimeUnit.MILLISECONDS.toMinutes(runningDifference()),null);
     }
 
     /**
-     * To get the amount of weeks we just get the days and see if we can
-     * divide it by 7. If we floor this number we get the amount of weeks.
-     *
-     * @return String that shows the amount of weeks that passed.
+     * Hierin word de tijd dat de simulator draait omgezet in weken.
+     * @return String Met daarin de weken dat de simulator draait
      */
+
     public String getRunningWeeks(){
         long days = TimeUnit.MILLISECONDS.toDays(runningDifference());
         return Objects.toString((int) Math.floor(days/7),null);
     }
 
     /**
-     * Get the formatted start time string.
-     *
-     * @return String with time and date in nice human format.
+     * Geeft de starttijd terug als String.
+     * @return String met daarin de starttijd
      */
+
     public String getStartTime() {
         return startTime;
     }
 
     /**
-     * Boolean to check if its weekend.
+     * Geeft terug of het weekend is.
      *
-     * @return boolean if its weekend.
+     * @return boolean Of het weekend is
      */
+
     public boolean isWeekend(){
         return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SATURDAY || this.runningCalendar.get(DAY_OF_WEEK) == Calendar.SUNDAY;
     }
 
-
     /**
-     * Method for resetting the time.
+     * Methode om de tijd te resettten.
      */
+
     public void resetTime(){
         this.startCalendar = Calendar.getInstance();
         this.runningCalendar = Calendar.getInstance();
@@ -145,8 +151,8 @@ public class Time extends AbstractModel{
     }
 
     /**
-     *
-     * @return boolean wanneer er een voorstelling is.
+     * Methode die bepaalt of er een voorstelling is.
+     * @return boolean Of er een voorstelling is
      */
 
     public boolean isVoorstelling(){
@@ -154,22 +160,30 @@ public class Time extends AbstractModel{
     }
 
     /**
-     *
-     * @return boolean wanneer het koopavond is.
+     * Methode die bepaalt of er een koopavondis.
+     * @return boolean Of er een koopavond is
      */
+
     public boolean isKoopAvond(){
-        return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.THURSDAY && (this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 17 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 21);
+        return this.runningCalendar.get(DAY_OF_WEEK) == Calendar.THURSDAY && this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 17 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 21;
     }
 
     /**
      * @return boolean wanneer het de volgende dag is.
      **/
+
     public boolean volgendeDag(){
         return this.runningCalendar.get(Calendar.HOUR_OF_DAY) == 23 && this.runningCalendar.get(Calendar.MINUTE) == 59;
     }
 
+    /**
+     *
+     * @return boolean Of het nacht is of niet
+     */
+
     public boolean isNacht(){
         return this.runningCalendar.get(Calendar.HOUR_OF_DAY) >= 18 && this.runningCalendar.get(Calendar.HOUR_OF_DAY) < 6;
     }
-
 }
+
+
