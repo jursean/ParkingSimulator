@@ -5,9 +5,18 @@ import hanze.project.logic.Model;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class LegendView
+ * Zorgt ervoor dat de legenda in beeld komt.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
+
 public class LegendView extends AbstractView {
 
-    //Initialiseer de velden voor de beschrijving van de kleuren
+    //De velden
+
     private JLabel legendaKopje;
     private JLabel wit;
     private JLabel blauw;
@@ -15,6 +24,7 @@ public class LegendView extends AbstractView {
     private JLabel groen;
     private JLabel grijs;
 
+    //De constructors
 
     public LegendView(Model simulator) {
         super(simulator);
