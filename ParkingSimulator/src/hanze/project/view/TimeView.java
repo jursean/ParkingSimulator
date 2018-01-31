@@ -5,11 +5,18 @@ import hanze.project.logic.Time;
 import javax.swing.*;
 import java.awt.*;
 
-// CLASS
+
+/**
+ * Class TimeView
+ * Zorgt ervoor dat de tijd in beeld komt.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
 
 public class TimeView extends AbstractView{
 
-    // FIELDS
+    // De velden
 
     private JLabel dateLabel;
     private JLabel minutes;
@@ -22,7 +29,7 @@ public class TimeView extends AbstractView{
     private JLabel weekendTrue;
     private Dimension size;
 
-    // CONSTRUCTORS
+    // De constructors
 
     public TimeView(Time timeController){
         super(timeController);
@@ -30,7 +37,7 @@ public class TimeView extends AbstractView{
 
         Dimension size = new Dimension(250, 400);
 
-        //Label initialiseren
+        //Label maken
         this.dateLabel = new JLabel("Tijd");
         this.minutes = new JLabel("Minuten: ");
         this.hours = new JLabel("Uren: ");
@@ -38,7 +45,7 @@ public class TimeView extends AbstractView{
         this.simulationTime = new JLabel();
         this.startTimeString = new JLabel();
 
-        //Zetten van de bounds
+        //Instellen van de grenswaarde
         dateLabel.setBounds(150,0,100,30); // Default = x: 3 y: -1 width: 100 height: 30
         minutes.setBounds(5,20,100,30);
         hours.setBounds(5,40,100,30);
@@ -46,7 +53,7 @@ public class TimeView extends AbstractView{
         simulationTime.setBounds(5,80,100,30);
         startTimeString.setBounds(5,100,100,30);
 
-        //Label toevoegen
+        //De labels toevoegen
         add(dateLabel);
         add(minutes);
         add(hours);
@@ -54,6 +61,12 @@ public class TimeView extends AbstractView{
         add(simulationTime);
         add(startTimeString);
     }
+
+    // De methodes
+
+    /**
+     * Zorgt ervoor dat de tijd geupdate word
+     */
 
     public void updateView(){
         Time time = (Time) super.model;
