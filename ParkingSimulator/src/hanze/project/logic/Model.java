@@ -77,6 +77,7 @@ public class Model extends AbstractModel {
 
     private double inkomen = 0.00;
     private double verwachteinkomen = 0.00;
+    private double totaalInkomen = 0.00;
 
     // De constructors
 
@@ -100,7 +101,6 @@ public class Model extends AbstractModel {
         exitCarQueue = new CarQueue();
 
         turnoverTotal = 0.0;
-
     }
 
     // De methodes
@@ -129,6 +129,10 @@ public class Model extends AbstractModel {
 
     public void tick() {
         time.tick();
+        if (time.volgendeDag()){
+            inkomen = 0;
+            verwachteinkomen = 0;
+        }
     	//advanceTime();
     	handleExit();
     	updateViews();
@@ -168,7 +172,7 @@ public class Model extends AbstractModel {
 
     private void updateViews(){
     	tick(turnoverTotal);
-        // Update the car park view.
+        // Update de parkeergarage view
         notifyViews();
     }
 
@@ -211,12 +215,7 @@ public class Model extends AbstractModel {
             if (!car.getHasReservation()) {
                 Location freeLocation = getFirstFreeLocation();
                 setCarAt(freeLocation, car);
-                if (!time.volgendeDag()) {
-                    verwachteinkomen = car.getTotaalPrijs() + verwachteinkomen;
-                    i++;
-                }else{
-                    verwachteinkomen = 0;
-                }
+                verwachteinkomen = car.getTotaalPrijs() + verwachteinkomen;
             }else{
                 if (reservation.size() > 175 && entrancePassResvQueue.frontCar() instanceof ReservationCar ) {
                     entrancePassResvQueue.removeCar();
@@ -259,13 +258,13 @@ public class Model extends AbstractModel {
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
     	    Car car = paymentCarQueue.removeCar();
             if (!time.volgendeDag()) {
+                totaalInkomen = car.getTotaalPrijs() + totaalInkomen;
                 inkomen = car.getTotaalPrijs() + inkomen;
                 // TODO Handle payment.
                 carLeavesSpot(car);
                 i++;
-            }else{
-                inkomen = 0;
-            }}
+            }
+    	}
     }
 
     /**
@@ -676,5 +675,9 @@ public class Model extends AbstractModel {
 
     public double getVerwachteinkomen(){
         return verwachteinkomen;
+    }
+
+    public double getTotaalInkomen(){
+        return totaalInkomen;
     }
 }
