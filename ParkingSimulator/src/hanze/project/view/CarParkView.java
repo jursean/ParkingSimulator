@@ -7,23 +7,21 @@ import hanze.project.logic.Location;
 import javax.swing.*;
 import java.awt.*;
 
-// CLASS
+/**
+ * Class CarParkView
+ * Zorgt ervoor dat de parkeerplaats op het beeld komt.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
 
 public class CarParkView extends AbstractView {
-    // title, cars and pass holder labels
     private JLabel titelTotalCar;
     private JLabel totalCar;
-    // image of the car park
     private Image carParkImage;
     private Dimension size;
 
-    // CONSTRUCTORS
-
-    /**
-     * Constructor of CarParkView that expects a model belonging to this view
-     *
-     * @param simulator AbstractModel that belongs to this view
-     */
+    // De constructors
 
     public CarParkView(Model simulator) {
         super(simulator);
@@ -31,22 +29,21 @@ public class CarParkView extends AbstractView {
         this.totalCar = new JLabel(" ");
         this.size = new Dimension(920, 400); // Default = width: 680 height: 330
 
-        // set location of the labels
         titelTotalCar.setBounds(5,5,300,20); // Default = x: 0 y: 10 width: 200 height: 20
         totalCar.setBounds(150,10,20,20);   // Default = x: 150 y: 10 width: 20 height: 20
 
-        // add the labels to the view
         add(titelTotalCar);
         add(totalCar);
     }
 
-    // METHODS
+    // De methodes
+
+    @Override
 
     /**
-     * The car park view component needs to be redisplayed. Copy the
-     * internal image to SCREEN.
+     * Plaatst de parkeergarage op het beeld.
      */
-    @Override
+
     public void paintComponent(Graphics graphics) {
         if (carParkImage == null) {
             return;
@@ -55,19 +52,16 @@ public class CarParkView extends AbstractView {
         graphics.drawImage(carParkImage, 0, 0, null); // Default = x: 0 y: 0
     }
 
-    /**
-     * Called by the model that belongs to this view
-     * to notify that the view should by updated
-     */
     @Override
+    /**
+     * zorgt ervoor dat de simulator geupdate word.
+     */
     public void updateView() {
 
         Model simulator = (Model) super.model;
 
-        // total statistics
         titelTotalCar.setText(String.valueOf("Totaal aantal auto's in garage: ")+simulator.getTotalCars());
 
-        // create a new car park image if the size has changed.
         carParkImage = createImage(size.width, size.height);
 
         Graphics graphics = carParkImage.getGraphics();
@@ -101,11 +95,11 @@ public class CarParkView extends AbstractView {
     }
 
     /**
-     * Draw a single parking spot for a car
+     * Tekent de parkeerplekken in de simulator.
      *
-     * @param graphics Graphics object to draw up on
-     * @param location Location to draw
-     * @param color Color object to give to the drawn place
+     * @param graphics Zorgt voor de graphics van de parkeerplekken
+     * @param location Locatie waar getekend moet worden
+     * @param color Zorgt voor de kleur
      */
     private void drawPlace(Graphics graphics, Location location, Color color) {
         graphics.setColor(color);
