@@ -1,5 +1,6 @@
 package hanze.project.logic;
 
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -22,6 +23,8 @@ public class Model extends AbstractModel {
 
     private Car[][][] cars;
 
+    private HashMap<Car, Location> reservation;
+
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
     private static final String RESV = "3";
@@ -37,20 +40,26 @@ public class Model extends AbstractModel {
     private int tickPause = 10;
 
     // Gemiddeld aantal auto's per uur
-    private int weekDayArrivals= 100;
+    private int weekDayArrivals = 100;
     private int weekendArrivals = 200;
     private int voorstellingArrivals = 250;
     private int koopAvondArrivals = 180;
+    private int avondArrivals =  20;
+    private int nachtArrivals = 20;
 
     private int weekDayPassArrivals= 50;
-    private int weekendPassArrivals = 10;
+    private int weekendPassArrivals = 30;
     private int voorstellingPassArrivals = 40;
     private int koopAvondPassArrivals = 50;
+    private int avondPassArrivals = 20;
+    private int nachtPassArrivals = 20;
 
-    private int weekDayResvArrivals = 30;
+    private int weekDayResvArrivals = 20;
     private int weekendResvArrivals = 60;
     private int voorstellingResvArrivals = 150;
     private int koopAvondResvArrivals = 30;
+    private int avondResvArrivals = 20;
+    private int nachtResvArrivals = 15;
 
     private int enterSpeed = 3; // number of cars that can enter per minute
     private int paymentSpeed = 7; // number of cars that can pay per minute
@@ -66,11 +75,8 @@ public class Model extends AbstractModel {
 
     private int rijTeLang = 0;
 
-	
-private double inkomen = 0.00;
-    private double verwachteinkomen = 0.0;
-	
-	
+    private double inkomen = 0.00;
+    private double verwachteinkomen = 0.00;
 
     // De constructors
 
@@ -80,7 +86,10 @@ private double inkomen = 0.00;
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots = (numberOfFloors - 1) * numberOfRows * numberOfPlaces;
         this.numberOfOpenResvSpots = numberOfRows * numberOfPlaces;
+
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
+
+        reservation = new HashMap<>();
 
         this.time = time;
 
@@ -97,7 +106,7 @@ private double inkomen = 0.00;
     // De methodes
 
     /**
-     * Voert de simulator uit.
+     * Start de simulator.
      */
 
     public void run() {
@@ -115,7 +124,7 @@ private double inkomen = 0.00;
     }
 
     /**
-     * Zorgt ervoor dat de tijd vooruit gaat.
+     * Zorgt ervoor dat de simulator vooruit gaat.
      */
 
     public void tick() {
@@ -133,7 +142,7 @@ private double inkomen = 0.00;
     }
 
     /**
-     * Zorgt ervoor dat er een wachtrij voor de ingang is.
+     * Zorgt ervoor dat er een wachtrij voor de ingang is en voegt auto's aan de ingang wachtrij toe.
      */
 
     private void handleEntrance(){
@@ -156,6 +165,7 @@ private double inkomen = 0.00;
      *  Update de view van de simulatie.
      */
 
+
     private void updateViews(){
     	tick(turnoverTotal);
         // Update the car park view.
@@ -163,23 +173,25 @@ private double inkomen = 0.00;
     }
 
     /**
-     * Bepaalt hoeveel auto's er binnenkomen in de garage.
+     * Geeft door hoeveel auto's er naar de garage gaan.
      */
 
+
     private void carsArriving(){
-    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, voorstellingArrivals, koopAvondArrivals);
+    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, voorstellingArrivals, koopAvondArrivals, avondArrivals, nachtArrivals);
         addArrivingCars(numberOfCars, AD_HOC);
 
-    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals, voorstellingPassArrivals, koopAvondPassArrivals);
+    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals, voorstellingPassArrivals, koopAvondPassArrivals, avondPassArrivals, nachtPassArrivals);
         addArrivingCars(numberOfCars, PASS);
 
-        numberOfCars=getNumberOfCars(weekDayResvArrivals, weekendResvArrivals, voorstellingResvArrivals, koopAvondResvArrivals);
+
+        numberOfCars=getNumberOfCars(weekDayResvArrivals, weekendResvArrivals, voorstellingResvArrivals, koopAvondResvArrivals, avondResvArrivals, nachtResvArrivals);
         addArrivingCars(numberOfCars, RESV);
     }
 
     /**
-     * Bepaalt hoeveel auto's er in de garage willen.
-     * @param queue Lengte van de wachtrij
+     * Bepaalt hoeveel auto's er naar de garage gaan.
+     * @param queue
      */
 
     private void carsEntering(CarQueue queue){
@@ -187,14 +199,13 @@ private double inkomen = 0.00;
         int random = rand.nextInt(50);
         int i=0;
 
-        // Verwijderen van auto wanneer de rij te lang is
+        // Verwijderen van (normale) auto wanneer de rij te lang is
         if (entranceCarQueue.carsInQueue() > 5 && entranceCarQueue.carsInQueue() < 8 && random > 25 || entranceCarQueue.carsInQueue() >= 8 && entranceCarQueue.carsInQueue() >= 8 && entranceCarQueue.carsInQueue() <= 10 && random > 14 || entranceCarQueue.carsInQueue() > 10){
             rijTeLang++;
             queue.removeCar();
-	totalCars--;
         }
 
-        // Remove car from the front of the queue and assign to a parking space.
+        // Verwijderd de auto van het begin van de rij en zet hem in een parkeerplek.
     	while (queue.carsInQueue()>0 && (!queue.frontCar().getHasReservation() && getNumberOfOpenSpots()>0) && i<enterSpeed || queue.carsInQueue()>0 && (queue.frontCar().getHasReservation() &&getNumberOfOpenResvSpots()>0) && i<enterSpeed) {
             Car car = queue.removeCar();
             if (!car.getHasReservation()) {
@@ -203,13 +214,18 @@ private double inkomen = 0.00;
                 if (!time.volgendeDag()) {
                     verwachteinkomen = car.getTotaalPrijs() + verwachteinkomen;
                     i++;
-		}else{
+                }else{
                     verwachteinkomen = 0;
                 }
             }else{
-                Location freeLocation = getFirstResvLocation();
-                setCarAt(freeLocation, car);
-                i++;
+                if (reservation.size() > 175 && entrancePassResvQueue.frontCar() instanceof ReservationCar ) {
+                    entrancePassResvQueue.removeCar();
+                }else{
+                    Location freeLocation = getFirstResvLocation();
+                    reservation.put(car, freeLocation);
+                    setCarAt(freeLocation, car);
+                    i++;
+                }
             }
         }
     }
@@ -217,9 +233,9 @@ private double inkomen = 0.00;
     /**
      * Bepaalt hoeveel autos klaar zijn om weg te gaan.
      */
-
+    
     private void carsReadyToLeave(){
-        // Add leaving cars to the payment queue.
+        // Auto's zetten naar de Payment Queue.
         Car car = getFirstLeavingCar();
         while (car!=null) {
         	if (car.getHasToPay()){
@@ -241,26 +257,34 @@ private double inkomen = 0.00;
         // Let cars pay.
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
-            Car car = paymentCarQueue.removeCar();
-	if (!time.volgendeDag()) {
-            inkomen = car.getTotaalPrijs() + inkomen;
-            // TODO Handle payment.
-            carLeavesSpot(car);
-            i++;
-	}else{
-            inkomen = 0;
-    	}
+    	    Car car = paymentCarQueue.removeCar();
+            if (!time.volgendeDag()) {
+                inkomen = car.getTotaalPrijs() + inkomen;
+                // TODO Handle payment.
+                carLeavesSpot(car);
+                i++;
+            }else{
+                inkomen = 0;
+            }}
     }
-}
 
     /**
-     * Bepaalt hoeveel auto's er weg willen
+     * Verwijderen van de auto's die in de exit queue zitten
      */
-
+    
     private void carsLeaving(){
         // Let cars leave.
     	int i=0;
     	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
+            if (exitCarQueue.frontCar() instanceof AdHocCar){
+                noPassholder--;
+            }
+            if (exitCarQueue.frontCar() instanceof ParkingPassCar){
+                passHolder--;
+            }
+            if (exitCarQueue.frontCar() instanceof ReservationCar){
+                reservationHolder--;
+            }
             exitCarQueue.removeCar();
     	    totalCars--;
             i++;
@@ -268,80 +292,87 @@ private double inkomen = 0.00;
     }
 
     /**
-     * Zorgt ervoor dat er een verschil is tussen dag, weekend, voorstellingen en koopavonden.
+     * Zorgt ervoor dat er een verschil is tussen dag, weekend, voorstellingen, koopavonden, avond en nacht.
      * @param weekDay true of false
      * @param weekend true of false
      * @param voorstelling true of false
      * @param koopavond true of false
+     * @param avond true of false
+     * @param nacht true of false
      * @return De waardes voor hoeveel autos er binnenkomen
      */
-
-    private int getNumberOfCars(int weekDay, int weekend, int voorstelling, int koopavond){
+    
+    private int getNumberOfCars(int weekDay, int weekend, int voorstelling, int koopavond, int avond, int nacht){
         int averageNumberOfCarsPerHour;
-        Random random = new Random();
         // Get the average number of cars that arrive per hour.
-        if (time.isWeekend()){
-            averageNumberOfCarsPerHour = weekend;
-            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-            return (int)Math.round(numberOfCarsPerHour / 60);
-        } else if (time.isKoopAvond()){
-            averageNumberOfCarsPerHour = koopavond;
-            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-            return (int)Math.round(numberOfCarsPerHour / 60);
-        } else if (time.isVoorstelling()){
+        if (time.isVoorstelling()){
             averageNumberOfCarsPerHour = voorstelling;
-            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-            return (int)Math.round(numberOfCarsPerHour / 60);
+            return calculateNumberOfCars(averageNumberOfCarsPerHour);
+        } else if (time.isKoopAvond()) {
+            averageNumberOfCarsPerHour = koopavond;
+            return calculateNumberOfCars(averageNumberOfCarsPerHour);
+        } else if (time.isAvond()) {
+            averageNumberOfCarsPerHour = avond;
+            return calculateNumberOfCars(averageNumberOfCarsPerHour);
+        } else if (time.isNacht()){
+            averageNumberOfCarsPerHour = nacht;
+            return calculateNumberOfCars(averageNumberOfCarsPerHour);
+        }else if (time.isWeekend()){
+            averageNumberOfCarsPerHour = weekend;
+            return calculateNumberOfCars(averageNumberOfCarsPerHour);
         }else{
             averageNumberOfCarsPerHour = weekDay;
-            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-            return (int)Math.round(numberOfCarsPerHour / 60);
+            return calculateNumberOfCars(averageNumberOfCarsPerHour);
         }
 
     }
 
     /**
-     * Voegt auto's toe aan de achterkant van de wachtrij.
-     * @param numberOfCars Hoeveel auto's er wachten
+     * Voert de berekening uit van hoeveel auto's er komen
+     * @param averageNumberOfCarsPerHour geeft het gemiddelde door
+     * @return de berekening uit van het nieuwe gemiddelde
+     */
+
+    private int calculateNumberOfCars(int averageNumberOfCarsPerHour){
+        Random random = new Random();
+        double standardDeviation = averageNumberOfCarsPerHour * 0.3;
+        double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
+        return (int)Math.round(numberOfCarsPerHour / 60);
+    }
+
+    /**
+     * Voegt auto's toe aan het begin van de wachtrij.
+     * @param numberOfCars Hoeveel auto's er komen
      * @param type Het type auto
      */
 
     private void addArrivingCars(int numberOfCars, String type){
-        // Add the cars to the back of the queue.
+        // Auto's in de ingang zetten
     	switch(type) {
     	case AD_HOC: 
             for (int i = 0; i < numberOfCars; i++) {
             	entranceCarQueue.addCar(new AdHocCar());
-            	noPassholder++;
-		totalCars++;
             }
             break;
     	case PASS:
             for (int i = 0; i < numberOfCars; i++) {
             	entrancePassResvQueue.addCar(new ParkingPassCar());
-            	passHolder++;
-		totalCars++;
             }
             break;
             case RESV:
                 for (int i = 0; i < numberOfCars; i++){
-                    entrancePassResvQueue.addCar(new ReservationCar());
-                    reservationHolder++;
-		totalCars++;
+                    ReservationCar k = new ReservationCar();
+                    entrancePassResvQueue.addCar(k);
+                    }
                 }
 
     	}
-    }
 
     /**
      * Zorgt ervoor dat de auto zijn plaats verlaat.
      * @param car Welke auto weg gaat
      */
-
+    
     private void carLeavesSpot(Car car){
     	removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
@@ -369,7 +400,6 @@ private double inkomen = 0.00;
      * Geeft terug hoeveel plekken de garage heeft.
      * @return numberOfPlaces hoeveel plekken de parkeergarage heeft
      */
-
     public int getNumberOfPlaces() {
         return numberOfPlaces;
     }
@@ -405,7 +435,7 @@ private double inkomen = 0.00;
     /**
      * Checked wat voor auto op een bepaalde plek staat.
      * @param location Locatie van de auto
-     * @return cars Geeft het soort auto terug.
+     * @return cars Geeft de auto terug.
      */
 
     public Car getCarAt(Location location) {
@@ -430,11 +460,20 @@ private double inkomen = 0.00;
         if (oldCar == null) {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            if (car.getHasReservation()){
-                numberOfOpenResvSpots--;
-            }
-            if (!car.getHasReservation()) {
+            if (car instanceof AdHocCar){
                 numberOfOpenSpots--;
+                noPassholder++;
+                totalCars++;
+            }
+            if (car instanceof ParkingPassCar){
+                numberOfOpenSpots--;
+                passHolder++;
+                totalCars++;
+            }
+            if (car instanceof ReservationCar){
+                numberOfOpenResvSpots--;
+                reservationHolder++;
+                totalCars++;
             }
             return true;
         }
@@ -458,6 +497,7 @@ private double inkomen = 0.00;
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
         if (car.getHasReservation()){
+            reservation.remove(car,location);
             numberOfOpenResvSpots++;
         }
         if (!car.getHasReservation()){
@@ -560,7 +600,7 @@ private double inkomen = 0.00;
     }
 
     /**
-     * Geeft de lengte van de rij voor de parkeergarage terug.
+     * Geeft de lengte van de (normale) rij van de parkeergarage terug.
      * @return int Lengte van de rij
      */
 
@@ -569,7 +609,7 @@ private double inkomen = 0.00;
     }
 
     /**
-     * Geeft de lengte van de rij voor de parkeergarage terug van auto's met een abbonement.
+     * Geeft de lengte van de rij voor de parkeergarage terug van auto's met een abonnement of reservering.
      * @return int Lengte van de rij
      */
 
@@ -609,7 +649,7 @@ private double inkomen = 0.00;
      * @return int Totaal van auto's die gereserveerd hebben
      */
 
-    public int getReservationHolder(){
+    public int getTotalReservationHolder(){
         return reservationHolder;
     }
 
@@ -618,8 +658,9 @@ private double inkomen = 0.00;
      * @return int Totaal aantal auto's
      */
 
+
     public int getTotalCars(){
-        return (noPassholder + passHolder + reservationHolder) + totalCars;
+        return totalCars;
     }
 
     /**
@@ -630,17 +671,20 @@ private double inkomen = 0.00;
     public int getRijTeLang(){
         return rijTeLang;
     }
-	/**
-	* retourneert de inkomen van de autos die weg gaan.
-	*/
-	public double getInkomen(){
+
+    /**
+     * @return de inkomen van de autos die weg gaan.
+     */
+
+    public double getInkomen(){
         return inkomen;
     }
-	/**
-	* retourneert de verwachte inkomsten van de autos die binnenkomen.
-	*/
+
+    /**
+     * @return de verwachte inkomsten van de autos die binnenkomen.
+     */
+
     public double getVerwachteinkomen(){
         return verwachteinkomen;
     }
-
 }
