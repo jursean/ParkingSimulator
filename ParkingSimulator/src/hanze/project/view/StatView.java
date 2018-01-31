@@ -25,10 +25,11 @@ public class StatView extends AbstractView {
     private JLabel aantalRijUit;
     private JLabel aantalRijTeLang;
     private JLabel inkomsten;
-    private JLabel Verwachteinkomen;
+    private JLabel verwachteInkomen;
     private JLabel aantalNormaal;
     private JLabel aantalPassHouder;
     private JLabel aantalResvHouder;
+    private JLabel totaalVerdient;
 
     // De constructors
 
@@ -44,11 +45,12 @@ public class StatView extends AbstractView {
         this.aantalRijInPassResv = new JLabel("Aantal auto's in de rij (pass/resv-ingang): ");
         this.aantalRijUit = new JLabel("Aantal auto's in de rij (uitgang): ");
         this.aantalRijTeLang = new JLabel("Aantal auto's doorgereden: ");
-        this.inkomsten = new JLabel("Inkomsten: €0");
-        this.Verwachteinkomen = new JLabel("Verwachte inkomsten: €0");
+        this.inkomsten = new JLabel("Inkomsten van vandaag: €0");
+        this.verwachteInkomen = new JLabel("Verwachte inkomsten: €0");
         this.aantalNormaal = new JLabel("Aantal normale parkeerhouders: ");
         this.aantalPassHouder = new JLabel("Aantal abonnement parkeerhouders: ");
         this.aantalResvHouder = new JLabel("Aantal reservering parkeerhouders: ");
+        this.totaalVerdient = new JLabel("Totale inkomsten: €0");
 
         //this.aantalTotaalVrijLabel = new JLabel("");
 
@@ -62,8 +64,9 @@ public class StatView extends AbstractView {
         aantalNormaal.setBounds(5, 160, 250, 30);
         aantalPassHouder.setBounds(5, 180, 250, 30);
         aantalResvHouder.setBounds(5, 200, 250, 30);
-        Verwachteinkomen.setBounds(5,240,300,30);
-        inkomsten.setBounds(5,260,260,30);
+        verwachteInkomen.setBounds(5,220,300,30);
+        inkomsten.setBounds(5,240,240,30);
+        totaalVerdient.setBounds(5,260,260,30);
 
 
         add(statsLabel);
@@ -74,10 +77,11 @@ public class StatView extends AbstractView {
         add(aantalRijUit);
         add(aantalRijTeLang);
         add(inkomsten);
-        add(Verwachteinkomen);
+        add(verwachteInkomen);
         add(aantalNormaal);
         add(aantalPassHouder);
         add(aantalResvHouder);
+        add(totaalVerdient);
     }
 
     // De methodes
@@ -96,8 +100,9 @@ public class StatView extends AbstractView {
         aantalRijInPassResv.setText(("Aantal auto's in de rij (pass/resv-ingang): ")+ simulator.getEntrancePassResvQueue().carsInQueue());
         aantalRijUit.setText(("Aantal auto's in de rij (uitgang): ")+ simulator.getExitCarQueue().carsInQueue());
         aantalRijTeLang.setText(("Aantal auto's doorgereden: ")+ simulator.getRijTeLang());
-        inkomsten.setText(("Inkomsten: €") + Math.round(simulator.getInkomen()));
-        Verwachteinkomen.setText(("Verwachte inkomsten: €") + Math.round(simulator.getVerwachteinkomen()));
+        inkomsten.setText(("Inkomsten van vandaag: €") + Math.round(simulator.getInkomen()));
+        verwachteInkomen.setText(("Verwachte inkomsten: €") + Math.round(simulator.getVerwachteinkomen()));
+        totaalVerdient.setText(("Totale inkomsten: €") + Math.round(simulator.getTotaalInkomen()));
         aantalNormaal.setText(("Aantal normale parkeerhouders: ")+simulator.getTotalNoPassholder());
         aantalPassHouder.setText(("Aantal abonnement parkeerhouders: ")+simulator.getTotalPassHolder());
         aantalResvHouder.setText(("Aantal reservering parkeerhouders: ")+simulator.getTotalReservationHolder());
