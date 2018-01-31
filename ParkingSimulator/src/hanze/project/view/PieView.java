@@ -68,7 +68,7 @@ public class PieView extends AbstractView {
 		scores[1] = simulator.getNumberOfOpenResvSpots();
 		scores[2] = simulator.getTotalNoPassholder();
 		scores[3] = simulator.getTotalPassHolder();
-		scores[4] = simulator.getReservationHolder();
+		scores[4] = simulator.getTotalReservationHolder();
 	}
 
 
