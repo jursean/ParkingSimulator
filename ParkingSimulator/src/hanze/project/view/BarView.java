@@ -13,6 +13,7 @@ public class BarView extends AbstractView {
             new LinkedHashMap<Color, Integer>();
 
     public BarView(Model simulator) {
+
         super(simulator);
 
     }
@@ -78,6 +79,8 @@ public class BarView extends AbstractView {
 
     @Override
     public Dimension getPreferredSize() {
+
         return new Dimension(bars.size() * 10 + 2, 50);
+
     }
 }

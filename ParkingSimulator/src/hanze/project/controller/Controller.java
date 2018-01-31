@@ -14,8 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Hashtable;
-import java.applet.*;
-import java.net.*;
 
 /**
  * Class Controller
@@ -39,7 +37,7 @@ public class Controller extends AbstractController implements ActionListener {
     public Controller(AbstractModel model) {
         super(model);
 
-        plusEenStep = new JButton("+1 Step");
+        plusEenStep = new JButton("+1");
         plusEenStep.addActionListener(this);
         startSimulator = new JButton("Start");
         startSimulator.addActionListener(this);
@@ -63,10 +61,10 @@ public class Controller extends AbstractController implements ActionListener {
         add(pauseSimulator);
         add(setSpeed);
 
-        plusEenStep.setBounds(570, 370, 100, 30);
-        startSimulator.setBounds(340, 370, 70, 30);
-        pauseSimulator.setBounds(420, 370, 70, 30);
-        setSpeed.setBounds(1110,5,70,360);
+        startSimulator.setBounds(1105, 288, 70, 30);
+        pauseSimulator.setBounds(1105, 320, 70, 30);
+        plusEenStep.setBounds(1105, 354, 70, 30);
+        setSpeed.setBounds(1100,25,70,250);
 
         this.setLayout(null);
 
@@ -74,7 +72,7 @@ public class Controller extends AbstractController implements ActionListener {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
-                ParkingSimulator.simulationSpeed = source.getValue() * 10;
+                ParkingSimulator.simulationSpeed = source.getValue();
             }
         });
     }
@@ -95,6 +93,7 @@ public class Controller extends AbstractController implements ActionListener {
             System.out.println("Er is iets fout gegaan bij het afspelen van het geluid.");
             ex.printStackTrace();
         }
+
         ParkingSimulator.running = true;
     }
 
@@ -113,6 +112,7 @@ public class Controller extends AbstractController implements ActionListener {
             System.out.println("Er is iets fout gegaan bij het afspelen van het geluid.");
             ex.printStackTrace();
         }
+
         ParkingSimulator.running = false;
     }
 

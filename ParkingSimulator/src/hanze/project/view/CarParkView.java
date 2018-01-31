@@ -24,42 +24,48 @@ public class CarParkView extends AbstractView {
     private Image carParkImage;
     private Dimension size;
 
-    // De constructors
+    // CONSTRUCTORS
+
 
     public CarParkView(Model simulator) {
+
         super(simulator);
+
         this.titelTotalCar = new JLabel("Totaal aantal auto's in garage: 0");
         this.totalCar = new JLabel("");
         this.garageVol = new JLabel("Standaard plekken vol!");
         this.garageBijnaVol = new JLabel("Standaard plekken bijna vol!");
         this.genoegPlek = new JLabel("Genoeg standaard plekken");
 
-
         this.size = new Dimension(920, 400); // Default = width: 680 height: 330
 
-        titelTotalCar.setBounds(5,5,300,20); // Default = x: 0 y: 10 width: 200 height: 20
-        totalCar.setBounds(150,10,20,20);   // Default = x: 150 y: 10 width: 20 height: 20
-        garageVol.setBounds(300,10,300,20);
-        garageBijnaVol.setBounds(300,10,300,20);
-        genoegPlek.setBounds(300,10,300,20);
+        titelTotalCar.setBounds(43,5,300,20); // Default = x: 0 y: 10 width: 200 height: 20
+        totalCar.setBounds(150,5,20,20);   // Default = x: 150 y: 10 width: 20 height: 20
+        garageVol.setBounds(300,5,300,20);
+        garageBijnaVol.setBounds(300,5,300,20);
+        genoegPlek.setBounds(300,5,300,20);
 
         add(titelTotalCar);
         add(totalCar);
         add(garageVol);
         add(garageBijnaVol);
         add(genoegPlek);
+
+        setVisible(true);
+
     }
 
-    // De methodes
-
-    @Override
+    // METHODS
 
     /**
      * Plaatst de parkeergarage op het beeld.
      */
 
+    @Override
     public void paintComponent(Graphics graphics) {
         if (carParkImage == null) {
+            graphics.setColor(Color.LIGHT_GRAY);
+            graphics.fillRect(0, 0, 770, 359);
             return;
         }
 
@@ -79,6 +85,9 @@ public class CarParkView extends AbstractView {
         carParkImage = createImage(size.width, size.height);
 
         Graphics graphics = carParkImage.getGraphics();
+
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(0, 0, 770, 359);
 
         if(simulator.getNumberOfOpenSpots() < 10){
 

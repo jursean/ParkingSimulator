@@ -24,34 +24,35 @@ public class TimeView extends AbstractView{
     private JLabel days;
     private JLabel simulationTime;
     private JLabel startTimeString;
-    private JLabel weekend;
-    private JLabel weekendFalse;
-    private JLabel weekendTrue;
-    private Dimension size;
+
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(0, 0, 330, 180);
+    }
 
     // De constructors
 
     public TimeView(Time timeController){
-        super(timeController);
-        Time time = (Time) super.model;
 
-        Dimension size = new Dimension(250, 400);
+        super(timeController);
 
         //Label maken
         this.dateLabel = new JLabel("Tijd");
         this.minutes = new JLabel("Minuten: ");
         this.hours = new JLabel("Uren: ");
         this.days = new JLabel("Dagen: ");
-        this.simulationTime = new JLabel();
-        this.startTimeString = new JLabel();
+        this.simulationTime = new JLabel("Tijd (Simulator): ");
+        this.startTimeString = new JLabel("Tijd (Actueel): ");
 
         //Instellen van de grenswaarde
-        dateLabel.setBounds(150,0,100,30); // Default = x: 3 y: -1 width: 100 height: 30
-        minutes.setBounds(5,20,100,30);
-        hours.setBounds(5,40,100,30);
-        days.setBounds(5,60,100,30);
-        simulationTime.setBounds(5,80,100,30);
-        startTimeString.setBounds(5,100,100,30);
+        dateLabel.setBounds(20,10,100,30); // Default = x: 3 y: -1 width: 100 height: 30
+        minutes.setBounds(20,40,100,30);
+        hours.setBounds(20,60,100,30);
+        days.setBounds(20,80,100,30);
+        simulationTime.setBounds(20,120,230,30);
+        startTimeString.setBounds(20,140,230,30);
 
         //De labels toevoegen
         add(dateLabel);
@@ -60,6 +61,7 @@ public class TimeView extends AbstractView{
         add(days);
         add(simulationTime);
         add(startTimeString);
+
     }
 
     // De methodes
@@ -77,17 +79,8 @@ public class TimeView extends AbstractView{
         minutes.setText(("Minuten: ")+time.getRunningMinutes());
         hours.setText(("Uren: ")+time.getRunningHours());
         days.setText(("Dagen: ")+time.getRunningDays());
-
-        /*if (time.isWeekend()) {
-            weekendFalse.setVisible(false);
-            weekendTrue.setVisible(true);
-        }
-        else {
-            weekendTrue.setVisible(false);
-            weekendFalse.setVisible(true);
-        }
-        */
-
+        simulationTime.setText(("Tijd (Simulator): ")+time.getCurrentTime());
+        startTimeString.setText(("Tijd (Huidig): ")+time.getStartTime());
         setVisible(true);
         super.updateView();
     }

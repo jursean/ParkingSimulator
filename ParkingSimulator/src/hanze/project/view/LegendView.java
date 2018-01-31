@@ -16,7 +16,6 @@ import java.awt.*;
 public class LegendView extends AbstractView {
 
     //Initialiseer de velden voor de beschrijving van de kleuren
-    private JLabel legendaKopje;
     private JLabel wit;
     private JLabel blauw;
     private JLabel rood;
@@ -25,36 +24,33 @@ public class LegendView extends AbstractView {
 
     /**
      * Deze methode zorgt voor de gekleurde vakjes in de legenda
-     * @param a
+     * @param graphics
      */
-    public void paintComponent(Graphics a) {
-        super.paintComponent(a);
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
 
-        a.setColor(Color.white);
-        a.fillRect(20,52,20,8);
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(0, 0, 330, 130);
 
+        graphics.setColor(Color.white);
+        graphics.fillRect(20,20,20,10);
 
-        a.setColor(Color.BLUE);
-        a.fillRect(20,72,20,8);
+        graphics.setColor(Color.BLUE);
+        graphics.fillRect(20,40,20,10);
 
+        graphics.setColor(Color.red);
+        graphics.fillRect(20,60,20,10);
 
-        a.setColor(Color.red);
-        a.fillRect(20,92,20,8);
+        graphics.setColor(Color.GREEN);
+        graphics.fillRect(20,80,20,10);
 
-
-        a.setColor(Color.GREEN);
-        a.fillRect(20,112,20,8);
-
-
-        a.setColor(Color.darkGray);
-        a.fillRect(20,132,20,8);
+        graphics.setColor(Color.darkGray);
+        graphics.fillRect(20,100,20,10);
     }
 
     public LegendView(Model simulator) {
         super(simulator);
-        Dimension size = new Dimension(250, 400);
 
-        this.legendaKopje = new JLabel("Legenda");
         this.wit = new JLabel("= Vrije parkeerplek ");
         this.blauw = new JLabel("= Parkeerder met abbonement");
         this.rood = new JLabel("= Parkeerder zonder abbonement");
@@ -62,20 +58,19 @@ public class LegendView extends AbstractView {
         this.grijs = new JLabel("= Bezette gereserveerde parkeerplek");
 
 
-        legendaKopje.setBounds(120, 0, 100, 30);
-        wit.setBounds(50, 40, 800, 30);
-        blauw.setBounds(50, 60, 400, 30);
-        rood.setBounds(50, 80, 400, 30);
-        groen.setBounds(50, 100, 400, 30);
-        grijs.setBounds(50, 120, 400, 30);
+        wit.setBounds(50, 18, 400, 15);
+        blauw.setBounds(50, 38, 400, 15);
+        rood.setBounds(50, 58, 400, 15);
+        groen.setBounds(50, 78, 400, 15);
+        grijs.setBounds(50, 98, 400, 15);
 
 
         wit.setForeground(Color.black);
         blauw.setForeground(Color.black);
         rood.setForeground(Color.black);
         groen.setForeground(Color.black);
+        grijs.setForeground(Color.black);
 
-        add(legendaKopje);
         add(wit);
         add(groen);
         add(blauw);

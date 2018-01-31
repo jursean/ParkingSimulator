@@ -32,9 +32,15 @@ public class StatView extends AbstractView {
 
     // De constructors
 
+    public void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(0, 0, 360, 320);
+    }
+
     public StatView(Model simulator) {
         super(simulator);
-        Dimension size = new Dimension(250, 400);
 
         this.statsLabel = new JLabel("Statistieken");
         this.aantalNietResvVrij = new JLabel("Totaal aantal niet-gereserveerde plekken vrij: ");
@@ -52,19 +58,18 @@ public class StatView extends AbstractView {
 
         //this.aantalTotaalVrijLabel = new JLabel("");
 
-        statsLabel.setBounds(90, 0, 100, 30); // Default = x: 3 y: 0 width: 100 height: 30
-        aantalNietResvVrij.setBounds(5, 40, 300, 30);
-        aantalResvVrij.setBounds(5, 60, 300, 30);
-        aantalRijIn.setBounds(5, 80, 500, 30);
-        aantalRijInPassResv.setBounds(5, 100, 500, 30);
-        aantalRijUit.setBounds(5, 120, 250, 30);
-        aantalRijTeLang.setBounds(5, 140, 250, 30);
-        aantalNormaal.setBounds(5, 160, 250, 30);
-        aantalPassHouder.setBounds(5, 180, 250, 30);
-        aantalResvHouder.setBounds(5, 200, 250, 30);
-        Verwachteinkomen.setBounds(5,240,300,30);
-        inkomsten.setBounds(5,260,260,30);
-
+        statsLabel.setBounds(20, 0, 100, 30); // Default = x: 3 y: 0 width: 100 height: 30
+        aantalNietResvVrij.setBounds(20, 55, 300, 30);
+        aantalResvVrij.setBounds(20, 75, 300, 30);
+        aantalRijIn.setBounds(20, 95, 500, 30);
+        aantalRijInPassResv.setBounds(20, 115, 500, 30);
+        aantalRijUit.setBounds(20, 135, 250, 30);
+        aantalRijTeLang.setBounds(20, 155, 250, 30);
+        aantalNormaal.setBounds(20, 175, 250, 30);
+        aantalPassHouder.setBounds(20, 195, 250, 30);
+        aantalResvHouder.setBounds(20, 215, 250, 30);
+        Verwachteinkomen.setBounds(20,255,300,30);
+        inkomsten.setBounds(20,275,260,30);
 
         add(statsLabel);
         add(aantalNietResvVrij);

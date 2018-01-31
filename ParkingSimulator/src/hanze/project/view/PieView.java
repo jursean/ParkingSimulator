@@ -29,8 +29,8 @@ public class PieView extends AbstractView {
 
 	// De constructors
 
-	public PieView (Model simulator)
-	{
+	public PieView(Model simulator){
+
 		super(simulator);
 
 		int i;
@@ -70,7 +70,6 @@ public class PieView extends AbstractView {
 		scores[3] = simulator.getTotalPassHolder();
 		scores[4] = simulator.getTotalReservationHolder();
 	}
-
 
 	/**
 	 * Zorgt ervoor dat de taart diagram getekend word.
@@ -158,16 +157,5 @@ public class PieView extends AbstractView {
 			}
 		}
 		return color;
-	}
-
-	/**
-	 * Update de taart diagram.
-	 */
-
-	public void updateView(){
-
-		setVisible(true);
-		super.updateView();
-
 	}
 }
