@@ -130,7 +130,7 @@ public class Controller extends AbstractController implements ActionListener {
 
     /**
      * Hier kan je acties toewijzen aan de knoppen in de GUI.
-     * @param actionevent e De "ActionEvent"
+     * @param e De "ActionEvent"
      */
 
     public void actionPerformed(ActionEvent e) {
