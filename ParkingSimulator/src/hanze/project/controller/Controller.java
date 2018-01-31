@@ -4,25 +4,37 @@ import hanze.project.logic.AbstractModel;
 import hanze.project.logic.Model;
 import hanze.project.main.ParkingSimulator;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Hashtable;
+import java.applet.*;
+import java.net.*;
 
-@SuppressWarnings("serial")
+/**
+ * Class Controller
+ * Deze klasse maakt de knoppen in de GUI.
+ *
+ * @author Jurian de Vries, Sebastiaan ter Veen, Deni Grabic, Tim Gorter, Sander Steenbergen
+ * @version 31-01-2018
+ */
 
 public class Controller extends AbstractController implements ActionListener {
 
-    // FIELDS
+    // De velden
 
     private JButton plusEenStep;
     private JButton startSimulator;
     private JButton pauseSimulator;
     private JSlider setSpeed;
 
-    // CONSTRUCTORS
+    // De constructors
 
     public Controller(AbstractModel model) {
         super(model);
@@ -67,14 +79,36 @@ public class Controller extends AbstractController implements ActionListener {
         });
     }
 
-    // METHODS
+    // De methodes
+
+    /**
+     * Deze methode checked of de start knop is ingedrukt.
+     */
+
     private void startPressed() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/hanze/project/sound/startstop.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception ex) {
+            System.out.println("Er is iets fout gegaan bij het afspelen van het geluid.");
+            ex.printStackTrace();
+        }
         ParkingSimulator.running = true;
     }
+
+    /**
+     * Deze methode checked of de pauze knop is ingedrukt.
+     */
 
     private void pausePressed() {
         ParkingSimulator.running = false;
     }
+
+    /**
+     * Deze methode is voor de knop die de simulator een stap verder laat gaan.
+     */
 
     private void plusEenStep() {
         Model model = (Model) super.model;
@@ -84,11 +118,11 @@ public class Controller extends AbstractController implements ActionListener {
         }
     }
 
-    private void setSpeed() {
+    /**
+     * Hier kan je acties toewijzen aan de knoppen in de GUI.
+     * @param actionevent e De "ActionEvent"
+     */
 
-    }
-
-    // HIER KAN MEN ACTIES TOEWIJZEN AAN DE KNOPPEN IN DE GUI
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == plusEenStep) {
