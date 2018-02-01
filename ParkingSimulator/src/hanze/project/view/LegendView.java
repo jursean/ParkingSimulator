@@ -76,5 +76,7 @@ public class LegendView extends AbstractView {
         add(blauw);
         add(rood);
         add(grijs);
+
+        this.setLayout(null);
     }
 }

@@ -13,12 +13,10 @@ public class TabView extends AbstractView {
         JTabbedPane tabbedPane = new JTabbedPane();
 
         PieView pieView = new PieView(simulator);
-        pieView.add(new JLabel("Pie Chart"));
-        tabbedPane.addTab("Pie Chart", pieView);
+        tabbedPane.addTab("Taartdiagram", pieView);
 
         BarView barView = new BarView(simulator);
-        barView.add(new JLabel("Bar Chart"));
-        tabbedPane.addTab("Bar Chart", barView);
+        tabbedPane.addTab("Staafdiagram", barView);
 
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(400, 200));

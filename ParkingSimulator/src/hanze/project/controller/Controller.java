@@ -41,7 +41,7 @@ public class Controller extends AbstractController implements ActionListener {
         plusEenStep.addActionListener(this);
         startSimulator = new JButton("Start");
         startSimulator.addActionListener(this);
-        pauseSimulator = new JButton("Pause");
+        pauseSimulator = new JButton("Pauze");
         pauseSimulator.addActionListener(this);
         setSpeed = new JSlider(JSlider.VERTICAL, 0,100,100);
         Hashtable labels = new Hashtable();
@@ -85,7 +85,7 @@ public class Controller extends AbstractController implements ActionListener {
 
     private void startPressed() {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/hanze/project/sound/startstop.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/hanze/project/sound/beep.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -104,7 +104,7 @@ public class Controller extends AbstractController implements ActionListener {
 
     private void pausePressed() {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/hanze/project/sound/startstop.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/hanze/project/sound/beep.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();

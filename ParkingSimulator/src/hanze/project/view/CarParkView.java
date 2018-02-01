@@ -18,41 +18,56 @@ import java.awt.*;
 public class CarParkView extends AbstractView {
     private JLabel titelTotalCar;
     private JLabel totalCar;
-    private JLabel garageVol;
-    private JLabel garageBijnaVol;
-    private JLabel genoegPlek;
+    private JLabel openSpotsFull;
+    private JLabel openSpotsHalfFull;
+    private JLabel openSpotsEmpty;
+    private JLabel openRevSpotsFull;
+    private JLabel openRevSpotsHalfFull;
+    private JLabel openRevSpotsEmpty;
     private Image carParkImage;
     private Dimension size;
 
     // CONSTRUCTORS
 
-
     public CarParkView(Model simulator) {
-
         super(simulator);
-
         this.titelTotalCar = new JLabel("Totaal aantal auto's in garage: 0");
         this.totalCar = new JLabel("");
-        this.garageVol = new JLabel("Standaard plekken vol!");
-        this.garageBijnaVol = new JLabel("Standaard plekken bijna vol!");
-        this.genoegPlek = new JLabel("Genoeg standaard plekken");
+        this.openSpotsFull = new JLabel("Standaard plekken vol!");
+        this.openSpotsHalfFull = new JLabel("Standaard plekken bijna vol!");
+        this.openSpotsEmpty = new JLabel("Genoeg standaard plekken!");
+        this.openRevSpotsFull = new JLabel("Gereserveerde plekken vol!");
+        this.openRevSpotsHalfFull = new JLabel("Gereserveerde plekken bijna vol!");
+        this.openRevSpotsEmpty = new JLabel("Genoeg gereserveerde plekken!");
 
         this.size = new Dimension(920, 400); // Default = width: 680 height: 330
 
         titelTotalCar.setBounds(43,5,300,20); // Default = x: 0 y: 10 width: 200 height: 20
         totalCar.setBounds(150,5,20,20);   // Default = x: 150 y: 10 width: 20 height: 20
-        garageVol.setBounds(300,5,300,20);
-        garageBijnaVol.setBounds(300,5,300,20);
-        genoegPlek.setBounds(300,5,300,20);
+        openSpotsFull.setBounds(303,5,300,20);
+        openSpotsHalfFull.setBounds(303,5,300,20);
+        openSpotsEmpty.setBounds(303,5,300,20);
+        openRevSpotsFull.setBounds(563,5,300,20);
+        openRevSpotsHalfFull.setBounds(563,5,300,20);
+        openRevSpotsEmpty.setBounds(563,5,300,20);
 
         add(titelTotalCar);
         add(totalCar);
-        add(garageVol);
-        add(garageBijnaVol);
-        add(genoegPlek);
+        add(openSpotsFull);
+        add(openSpotsHalfFull);
+        add(openSpotsEmpty);
+        add(openRevSpotsFull);
+        add(openRevSpotsHalfFull);
+        add(openRevSpotsEmpty);
 
-        setVisible(true);
+        openSpotsFull.setVisible(false);
+        openSpotsHalfFull.setVisible(false);
+        openSpotsEmpty.setVisible(false);
+        openRevSpotsFull.setVisible(false);
+        openRevSpotsHalfFull.setVisible(false);
+        openRevSpotsEmpty.setVisible(false);
 
+        this.setLayout(null);
     }
 
     // METHODS
@@ -81,38 +96,55 @@ public class CarParkView extends AbstractView {
         Model simulator = (Model) super.model;
 
         titelTotalCar.setText(String.valueOf("Totaal aantal auto's in garage: ")+simulator.getTotalCars());
-
         carParkImage = createImage(size.width, size.height);
 
         Graphics graphics = carParkImage.getGraphics();
-
         graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(0, 0, 770, 359);
 
+        // ################### AANTAL VRIJE PARKEERPLEKKER #######################
         if(simulator.getNumberOfOpenSpots() < 10){
-
-            garageVol.setVisible(true);
-            garageVol.setForeground(Color.red);
+            openSpotsFull.setVisible(true);
+            openSpotsFull.setForeground(Color.red);
         } else{
-            garageVol.setVisible(false);
+            openSpotsFull.setVisible(false);
         }
 
         if(simulator.getNumberOfOpenSpots() > 10 && simulator.getNumberOfOpenSpots() < 50){
-
-            garageBijnaVol.setVisible(true);
-            garageBijnaVol.setForeground(Color.orange);
+            openSpotsHalfFull.setVisible(true);
+            openSpotsHalfFull.setForeground(Color.orange);
         } else{
-            garageBijnaVol.setVisible(false);
+            openSpotsHalfFull.setVisible(false);
         }
 
         if(simulator.getNumberOfOpenSpots() > 50){
-
-            genoegPlek.setVisible(true);
-            genoegPlek.setForeground(Color.green);
+            openSpotsEmpty.setVisible(true);
+            openSpotsEmpty.setForeground(Color.green);
         } else{
-            genoegPlek.setVisible(false);
+            openSpotsEmpty.setVisible(false);
         }
 
+        // ############## AANTAL VRIJE GERESERVEERDE PARKEERPLEKKER ###############
+        if(simulator.getNumberOfOpenResvSpots() < 10){
+            openRevSpotsFull.setVisible(true);
+            openRevSpotsFull.setForeground(Color.red);
+        } else{
+            openRevSpotsFull.setVisible(false);
+        }
+
+        if(simulator.getNumberOfOpenResvSpots() > 10 && simulator.getNumberOfOpenResvSpots() < 50){
+            openRevSpotsHalfFull.setVisible(true);
+            openRevSpotsHalfFull.setForeground(Color.orange);
+        } else{
+            openRevSpotsHalfFull.setVisible(false);
+        }
+
+        if(simulator.getNumberOfOpenResvSpots() > 50){
+            openRevSpotsEmpty.setVisible(true);
+            openRevSpotsEmpty.setForeground(Color.green);
+        } else{
+            openRevSpotsEmpty.setVisible(false);
+        }
 
         for (int floor = 0; floor < simulator.getNumberOfFloors(); floor++) {
             for (int row = 0; row < simulator.getNumberOfRows(); row++) {
